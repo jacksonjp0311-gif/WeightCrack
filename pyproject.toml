@@ -1,0 +1,17 @@
+[project]
+name = "weightcrack"
+version = "0.1.0"
+description = "Host-gated surgical weight-editing research scaffold"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0",
+    "numpy",
+]
+
+[project.optional-dependencies]
+safetensors = ["safetensors", "torch"]
+test = ["pytest"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
