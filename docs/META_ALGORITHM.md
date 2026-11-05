@@ -9,9 +9,19 @@ Given a model and a target sector (math accuracy, coding precision, refusal stre
 1. **Inspect**  
    Header + bounded statistics + optional activation probes on practice examples only.
 
-2. **Localize**  
-   Host-executed tools return candidate directions or coordinates (activation patching summaries, residual directions, finite-difference sensitivity).  
-   Agent never sees raw weights or holdout.
+## Localization (refined)
+
+Host-executed, practice-only instruments:
+
+- Activation difference: mean residual / MLP output on failing practice examples minus mean on correct or sentinel examples. Top singular vector is a candidate direction \( u \).
+- Column ranking: for a candidate \( u \), score columns by \( |u^\top W_{:, c}| \) and return the top-k.
+- Direction trial: host applies the closed-form removal
+  \[
+  W'_{:, c} = W_{:, c} - s \, u \, (u^\top W_{:, c})
+  \]
+  under the current policy budget, scores practice, and returns the delta. No permanent write.
+
+Agent proposes a `weightcrack.patch.v1` that names the tensor, the direction, the columns, and the strength. Host gates and, if accepted, writes the candidate + receipt.
 
 3. **Propose**  
    Agent emits a `weightcrack.patch.v1` grounded in the localization report and practice scores.
