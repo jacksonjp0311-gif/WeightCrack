@@ -1,3 +1,3 @@
-"""WeightCrack — host-gated surgical weight editing scaffold."""
+"""WeightCrack package."""
 
 __version__ = "0.1.0"
