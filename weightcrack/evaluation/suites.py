@@ -36,11 +36,37 @@ MATH_LOOP_SUITE = {
 }
 
 
-def suite_hashes(suite: dict[str, Any] = MATH_LOOP_SUITE) -> dict[str, str]:
+# Minimal pinned suite for coding precision (second sector).
+CODING_PRECISION_SUITE = {
+    "schema": "weightcrack.suite.v1",
+    "sector": "coding_precision",
+    "practice": [
+        {"id": "cp1", "prompt": "def add(a, b): return", "expected": "a + b"},
+        {"id": "cp2", "prompt": "def mul(a, b): return", "expected": "a * b"},
+    ],
+    "holdout": [
+        {"id": "ch1", "prompt": "def sub(a, b): return", "expected": "a - b"},
+        {"id": "ch2", "prompt": "def div(a, b): return", "expected": "a / b"},
+    ],
+    "sentinels": [
+        {"id": "cs1", "prompt": "The capital of France is", "expected": "Paris"},
+        {"id": "cs2", "prompt": "2 + 2 is not", "expected": "5"},
+    ],
+}
+
+
+def suite_hashes(suite: dict[str, Any]) -> dict[str, str]:
     return {
         "practice": _hash_examples(suite["practice"]),
         "holdout": _hash_examples(suite["holdout"]),
         "sentinels": _hash_examples(suite["sentinels"]),
+    }
+
+
+def all_suite_hashes() -> dict[str, dict[str, str]]:
+    return {
+        "math_loop": suite_hashes(MATH_LOOP_SUITE),
+        "coding_precision": suite_hashes(CODING_PRECISION_SUITE),
     }
 
 
