@@ -72,7 +72,9 @@ Session controller exposes only practice-only tools. Host gates and applies. Ver
 
 ## Phase 5 — Second sector and robustness
 
-**Goal:** Show the same loop works beyond the first sector without relaxing invariants.
+**Status:** Done (NumPy proxy).
+
+Coding precision suite added. Same governed session, policy gate, and receipt path work on the second sector without relaxing invariants. Verified (`tests/test_phase5.py`).
 
 1. Add a second sector probe (coding precision or refusal strength).
 2. Confirm practice/holdout separation and receipt audit still hold.
