@@ -28,7 +28,9 @@ Direction-removal formula is implemented and verified by round-trip test (`tests
 
 ## Phase 2 — Practice-only localization instruments
 
-**Goal:** Give the agent host-computed candidates instead of asking it to invent coordinates.
+**Status:** Done (NumPy proxy).
+
+Activation-difference singular vector, column ranking by projection, and host-executed direction trial are implemented and verified (`tests/test_phase2.py`). All operate on caller-supplied practice data only.
 
 1. Activation-difference report (practice examples only).
    - Mean residual or MLP output on failing examples minus mean on correct/sentinel examples.
