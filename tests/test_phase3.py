@@ -4,12 +4,12 @@ from weightcrack.evaluation.suites import MATH_LOOP_SUITE, suite_hashes, score_s
 
 
 def test_suite_pins_and_scoring():
-    hashes = suite_hashes()
+    hashes = suite_hashes(MATH_LOOP_SUITE)
     assert len(hashes["practice"]) == 64
     assert len(hashes["holdout"]) == 64
     assert len(hashes["sentinels"]) == 64
     # Recompute to confirm stability
-    assert suite_hashes() == hashes
+    assert suite_hashes(MATH_LOOP_SUITE) == hashes
 
     practice_expected = [ex["expected"] for ex in MATH_LOOP_SUITE["practice"]]
     perfect = score_stub(practice_expected, practice_expected)

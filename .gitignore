@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+*.receipt.json
+*.npz

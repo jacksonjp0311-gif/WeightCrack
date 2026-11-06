@@ -26,7 +26,7 @@ class PatchChange(BaseModel):
 
 
 class WeightCrackPatch(BaseModel):
-    schema: Literal["weightcrack.patch.v1"] = "weightcrack.patch.v1"
+    schema_id: Literal["weightcrack.patch.v1"] = "weightcrack.patch.v1"
     base_sha256: str
     reason: str
     sector: str  # e.g. "math", "coding", "refusal", "style"
@@ -39,7 +39,7 @@ class WeightCrackPatch(BaseModel):
 
 
 class WeightCrackPolicy(BaseModel):
-    schema: Literal["weightcrack.policy.v1"] = "weightcrack.policy.v1"
+    schema_id: Literal["weightcrack.policy.v1"] = "weightcrack.policy.v1"
     allow_tensors: list[str]
     max_entries: int = 64
     max_fraction: float = 0.01
