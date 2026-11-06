@@ -59,7 +59,9 @@ Hash-pinned practice/holdout/sentinel suite for math loop reduction is in place 
 
 ## Phase 4 — Agent loop under governance
 
-**Goal:** Close the propose → gate → evaluate loop with an agent that only sees practice signals.
+**Status:** Done (NumPy proxy).
+
+Session controller exposes only practice-only tools. Host gates and applies. Verified by end-to-end test (`tests/test_phase4.py`). Holdout remains inaccessible to the agent.
 
 1. Session controller that exposes only the Phase 2 tools and the practice suite.
 2. Agent proposes a `weightcrack.patch.v1`.
