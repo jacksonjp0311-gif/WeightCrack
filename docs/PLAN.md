@@ -46,7 +46,9 @@ Activation-difference singular vector, column ranking by projection, and host-ex
 
 ## Phase 3 — Sector probe suites
 
-**Goal:** Frozen, hash-pinned practice and holdout suites for at least one sector.
+**Status:** Done (stub).
+
+Hash-pinned practice/holdout/sentinel suite for math loop reduction is in place (`weightcrack/evaluation/suites.py`). Scoring stub counts exact matches. Real model generation can replace the stub.
 
 1. Define a narrow first sector (math repetition / loop reduction is the strongest existing signal).
 2. Pin practice examples, holdout examples, and sentinel controls with hashes.
