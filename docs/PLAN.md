@@ -13,7 +13,9 @@ A host-gated meta-algorithm that can take a model, localize weights responsible 
 
 ## Phase 1 — Make the working edit runnable
 
-**Goal:** End-to-end direction removal on a real checkpoint under the existing policy and receipt invariants.
+**Status:** Done (NumPy proxy).
+
+Direction-removal formula is implemented and verified by round-trip test (`tests/test_phase1.py`). Receipt is emitted. Safetensors loader can be layered on the same apply logic.
 
 1. Finish the safetensors load / apply / write path in `weightcrack/patches/huggingface.py`.
    - Support the closed-form column removal already specified in `docs/MATH.md`.
