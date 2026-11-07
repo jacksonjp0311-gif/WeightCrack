@@ -30,7 +30,7 @@ def _predict(A, b, W, c, x):
     return np.argmax(logits, axis=1)
 
 
-def run_experiment(out_dir: Path, seed: int = 0) -> dict:
+def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) -> dict:
     start = time.time()
     rng = np.random.default_rng(seed)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -45,7 +45,6 @@ def run_experiment(out_dir: Path, seed: int = 0) -> dict:
     fault_cols = [3, 7]
     fault_dir = rng.normal(size=4).astype(np.float32)
     fault_dir /= np.linalg.norm(fault_dir)
-    fault_strength = 0.8
     W_damaged = W.copy()
     for col in fault_cols:
         W_damaged[:, col] = W_damaged[:, col] - fault_strength * fault_dir * np.dot(fault_dir, W[:, col])
@@ -178,7 +177,7 @@ def run_experiment(out_dir: Path, seed: int = 0) -> dict:
     report = {
         "status": "complete",
         "wall_time_s": wall,
-        "seed": seed,
+        "fault_strength": fault_strength,
         "base_hash": base_hash,
         "direction_norm": float(np.linalg.norm(direction)),
         "heuristic_columns": heur_cols,
