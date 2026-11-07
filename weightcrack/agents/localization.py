@@ -53,6 +53,45 @@ def rank_columns(
     }
 
 
+def practice_direction_search(
+    matrix: np.ndarray,
+    fail_activations: np.ndarray,
+    success_activations: np.ndarray,
+    practice_score_fn,
+    strength: float = 0.5,
+    max_directions: int = 4,
+) -> dict[str, Any]:
+    """
+    Practice-only search over a small set of directions derived from failure activations.
+    Returns the direction and columns with the best practice score under the given strength.
+    No holdout access.
+    """
+    candidates = []
+    # Mean difference
+    diff = activation_difference(fail_activations, success_activations)
+    candidates.append(np.array(diff["direction"]))
+    # Top principal directions of the failure set (centered)
+    if fail_activations.shape[0] >= 2:
+        centered = fail_activations - fail_activations.mean(axis=0)
+        _, _, vh = np.linalg.svd(centered, full_matrices=False)
+        for i in range(min(max_directions - 1, vh.shape[0])):
+            candidates.append(vh[i])
+
+    best = None
+    for u in candidates:
+        ranked = rank_columns(matrix, u, top_k=2)
+        cols = ranked["columns"]
+        trial = direction_trial(matrix, u, cols, strength, practice_score_fn)
+        if best is None or trial["delta"] > best["delta"]:
+            best = {
+                "direction": u.tolist(),
+                "columns": cols,
+                "delta": trial["delta"],
+                "trial": trial,
+            }
+    return best or {"status": "NO_DIRECTION"}
+
+
 def direction_trial(
     matrix: np.ndarray,
     direction: list[float] | np.ndarray,

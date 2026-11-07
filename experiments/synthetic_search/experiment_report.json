@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "wall_time_s": 0.027088642120361328,
+  "fault_strength": 2.0,
+  "base_hash": "20af740381f56a32841d6694abf6f4fb5aec643e34d2c83c6740b6db67124054",
+  "direction_norm": 0.9999999882131604,
+  "heuristic_columns": [
+    0,
+    14
+  ],
+  "search_columns": [
+    11,
+    5
+  ],
+  "random_columns": [
+    3,
+    8
+  ],
+  "practice_failures": 6,
+  "locked_finalists": {
+    "heuristic": {
+      "status": "NO_QUALIFIED_CANDIDATE"
+    },
+    "random": {
+      "status": "NO_QUALIFIED_CANDIDATE"
+    },
+    "search": {
+      "status": "NO_QUALIFIED_CANDIDATE"
+    }
+  },
+  "heldout": {
+    "heuristic": {
+      "status": "NO_QUALIFIED_CANDIDATE"
+    },
+    "random": {
+      "status": "NO_QUALIFIED_CANDIDATE"
+    },
+    "search": {
+      "status": "NO_QUALIFIED_CANDIDATE"
+    }
+  },
+  "no_edit_target_practice": 122
+}

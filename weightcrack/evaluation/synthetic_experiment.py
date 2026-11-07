@@ -14,7 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
-from weightcrack.agents.localization import activation_difference, rank_columns
+from weightcrack.agents.localization import activation_difference, rank_columns, practice_direction_search
 from weightcrack.patches.huggingface import apply_project_remove, apply_patch
 from weightcrack.schema import WeightCrackPatch, WeightCrackPolicy, PatchChange
 
@@ -75,9 +75,23 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
     direction = np.array(diff["direction"])
     assert direction.shape[0] == W_damaged.shape[0], "direction must match W rows"
 
-    # Heuristic columns
+    # Mean-difference direction and columns
     ranked = rank_columns(W_damaged, direction, top_k=2)
     heur_cols = ranked["columns"]
+
+    # Practice-only direction search (mean difference + top principal directions of failures)
+    def score_target(W_cand, x, y):
+        pred = _predict(A, b, W_cand, c, x)
+        return int(np.sum(pred == y))
+
+    def _prac_score(W_cand):
+        return float(score_target(W_cand, x_prac_t, y_prac_t))
+
+    search = practice_direction_search(
+        W_damaged, logits_fail, logits_success, _prac_score, strength=0.5
+    )
+    search_direction = np.array(search["direction"]) if search and "direction" in search else direction
+    search_cols = search.get("columns", heur_cols) if search else heur_cols
 
     # Random control columns
     ctrl_rng = np.random.default_rng(seed + 1000)
@@ -102,9 +116,13 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
         pred = _predict(A, b, W_cand, c, x)
         return int(np.sum(pred != y))  # flips
 
-    results = {"heuristic": [], "random": []}
+    results = {"heuristic": [], "random": [], "search": []}
 
-    for name, cols in [("heuristic", heur_cols), ("random", rand_cols)]:
+    for name, cols, dir_vec in [
+        ("heuristic", heur_cols, direction),
+        ("random", rand_cols, direction),
+        ("search", search_cols, search_direction),
+    ]:
         best = None
         for dose in doses:
             target_norm = dose * W_norm
@@ -112,7 +130,7 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
             # Approximate: strength ~ target_norm / (||u|| * ||col||) ; use fixed mapping
             strength = min(2.0, max(0.01, dose * 2.0))
             try:
-                cand, acc = apply_project_remove(W_damaged, direction, cols, strength)
+                cand, acc = apply_project_remove(W_damaged, dir_vec, cols, strength)
             except Exception as exc:
                 results[name].append({"dose": dose, "status": "inadmissible", "error": str(exc)})
                 continue
@@ -148,18 +166,20 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
     locked = {
         "heuristic": results["heuristic_finalist"],
         "random": results["random_finalist"],
+        "search": results["search_finalist"],
     }
 
     # Held-out evaluation
     heldout = {}
-    for name in ["heuristic", "random"]:
+    for name in ["heuristic", "random", "search"]:
         fin = locked[name]
         if fin.get("status") == "NO_QUALIFIED_CANDIDATE":
             heldout[name] = {"status": "NO_QUALIFIED_CANDIDATE"}
             continue
         strength = fin["strength"]
-        cols = heur_cols if name == "heuristic" else rand_cols
-        cand, _ = apply_project_remove(W_damaged, direction, cols, strength)
+        cols = {"heuristic": heur_cols, "random": rand_cols, "search": search_cols}[name]
+        dir_vec = search_direction if name == "search" else direction
+        cand, _ = apply_project_remove(W_damaged, dir_vec, cols, strength)
         t_gain = score_target(cand, x_hold_t, y_hold_t) - score_target(W_damaged, x_hold_t, y_hold_t)
         prev_ok = _predict(A, b, W_damaged, c, x_hold_t) == y_hold_t
         cand_pred = _predict(A, b, cand, c, x_hold_t)
@@ -181,6 +201,7 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
         "base_hash": base_hash,
         "direction_norm": float(np.linalg.norm(direction)),
         "heuristic_columns": heur_cols,
+        "search_columns": search_cols,
         "random_columns": rand_cols,
         "practice_failures": int(fail_mask.sum()),
         "locked_finalists": locked,
