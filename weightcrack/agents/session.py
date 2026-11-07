@@ -50,7 +50,12 @@ class Session:
     def trial(self, columns: list[int], strength: float) -> dict[str, Any]:
         diff = activation_difference(self.practice_fail, self.practice_success)
         return direction_trial(
-            self.matrix, diff["direction"], columns, strength, self.practice_score_fn
+            self.matrix,
+            diff["direction"],
+            columns,
+            strength,
+            self.practice_score_fn,
+            policy=self.policy,
         )
 
     def propose_and_gate(

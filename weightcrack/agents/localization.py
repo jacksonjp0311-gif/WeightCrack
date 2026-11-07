@@ -59,19 +59,26 @@ def direction_trial(
     columns: list[int],
     strength: float,
     practice_score_fn,
+    policy=None,
 ) -> dict[str, Any]:
     """
-    Apply the removal formula temporarily, score practice, return the delta.
-    Does not write a permanent candidate.
+    Score the same policy-admitted, rounded candidate that would be saved.
+    Does not write a permanent file.
     """
-    from ..patches.huggingface import _remove_direction
-    edited = _remove_direction(matrix, direction, columns, strength)
+    from ..patches.huggingface import apply_project_remove
+    from ..policy import enforce_realized
+
+    candidate, accounting = apply_project_remove(matrix, direction, columns, strength)
+    if policy is not None:
+        enforce_realized(accounting, policy, matrix.size)
+
     before = practice_score_fn(matrix)
-    after = practice_score_fn(edited)
+    after = practice_score_fn(candidate)
     return {
         "practice_before": before,
         "practice_after": after,
         "delta": after - before,
         "columns": columns,
         "strength": strength,
+        "accounting": accounting,
     }
