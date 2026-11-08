@@ -1,25 +1,20 @@
-"""Minimal Phase 1 verification for direction removal."""
+"""Phase 1 checks the projection formula and the stored candidate."""
 
-import hashlib
 import numpy as np
-from pathlib import Path
-import tempfile
 
-from weightcrack.schema import WeightCrackPatch, WeightCrackPolicy, PatchChange
+from weightcrack.canonical import array_content_sha256
 from weightcrack.patches.huggingface import apply_patch
+from weightcrack.schema import PatchChange, WeightCrackPatch, WeightCrackPolicy
 
 
-def test_direction_removal_roundtrip():
+def test_direction_removal_matches_the_formula(tmp_path):
     rng = np.random.default_rng(0)
     matrix = rng.normal(size=(32, 16)).astype(np.float32)
-    base_hash = hashlib.sha256(matrix.tobytes()).hexdigest()
-
-    direction = rng.normal(size=32).tolist()
+    direction = rng.normal(size=32)
     columns = [2, 5, 9]
     strength = 0.8
-
     patch = WeightCrackPatch(
-        base_sha256=base_hash,
+        base_sha256=array_content_sha256(matrix),
         reason="phase1 verification",
         sector="math",
         changes=[
@@ -27,25 +22,35 @@ def test_direction_removal_roundtrip():
                 tensor="mlp.down_proj",
                 op="project_remove",
                 index=columns,
-                direction=direction,
+                direction=direction.tolist(),
                 strength=strength,
             )
         ],
     )
-    policy = WeightCrackPolicy(allow_tensors=["mlp.down_proj"], max_entries=64, max_fraction=0.1)
+    # Three columns touch 96 coordinates. The old max_entries=64 budget was too small.
+    policy = WeightCrackPolicy(
+        allow_tensors=["mlp.down_proj"],
+        max_entries=96,
+        max_fraction=0.2,
+        max_abs_delta=10.0,
+    )
+    bundle = tmp_path / "candidate.wcbundle"
+    receipt = apply_patch(matrix, patch, policy, bundle, tensor_name="mlp.down_proj", task_id="phase1")
+    assert receipt["disposition"] == "applied"
+    assert receipt["behavioral_qualification"] is None
+    assert receipt["accounting"]["operation_count"] == 1
+    assert receipt["accounting"]["touched_coordinates"] == 96
+    assert receipt["accounting"]["fraction_denominator"] == matrix.size
 
-    with tempfile.TemporaryDirectory() as tmp:
-        out = Path(tmp) / "candidate.npz"
-        receipt = apply_patch(matrix, patch, policy, out)
-        assert receipt["status"] == "applied"
-        assert receipt["changed_entries"] == 1
-        loaded = np.load(out)["weight"]
-        assert loaded.shape == matrix.shape
-        # Confirm the math: at least one column changed
-        assert not np.allclose(loaded[:, columns], matrix[:, columns])
-        print("Phase 1 direction-removal round-trip: ok")
-        return True
-
-
-if __name__ == "__main__":
-    test_direction_removal_roundtrip()
+    loaded = np.load(bundle / "candidate.npz")["mlp.down_proj"]
+    unit = direction / np.linalg.norm(direction)
+    expected = np.array(matrix, dtype=np.float64, copy=True)
+    for column in columns:
+        projection = float(np.dot(unit, expected[:, column]))
+        expected[:, column] = expected[:, column] - strength * unit * projection
+    expected = expected.astype(np.float32)
+    assert np.array_equal(loaded, expected)
+    assert np.count_nonzero(loaded != matrix) == receipt["accounting"]["changed_coordinates"]
+    untouched = [column for column in range(matrix.shape[1]) if column not in columns]
+    assert np.array_equal(loaded[:, untouched], matrix[:, untouched])
+    assert loaded.dtype == np.float32

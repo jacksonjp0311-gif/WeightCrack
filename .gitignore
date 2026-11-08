@@ -10,4 +10,5 @@ venv/
 htmlcov/
 *.receipt.json
 *.npz
+!experiments/**/*.npz
 __pycache__/

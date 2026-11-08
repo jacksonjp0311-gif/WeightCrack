@@ -1,0 +1,11 @@
+{
+  "behavioral_qualification": null,
+  "candidate_file_sha256": "9caf47e39bcbad1a125dcbfcdc04eb240f47291465a94c89c545e32cb4b5f06a",
+  "disposition": "applied",
+  "patch_sha256": "24bf085a9511131d73fc9c23bf0ed7bd3cb6c1f75cf4d30e387d2fc1b463014c",
+  "policy_sha256": "e0c502c0a37449677fa5991db1b9e1a7f78b0ad3427554420ac3d17e3640bfca",
+  "schema": "weightcrack.event.v1",
+  "status": "applied",
+  "task_id": "random-05",
+  "tensor": "W"
+}

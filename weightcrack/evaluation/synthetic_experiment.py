@@ -30,8 +30,18 @@ def _predict(A, b, W, c, x):
     return np.argmax(logits, axis=1)
 
 
+# These directory names hold historical reports. Do not overwrite them.
+HISTORICAL_REPORTS = {"synthetic_v1", "synthetic_strong", "synthetic_search"}
+
+
 def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) -> dict:
+    """Earlier synthetic loop. Not the preregistered proxy_fault_v1 study."""
     start = time.time()
+    out_dir = Path(out_dir)
+    if out_dir.name in HISTORICAL_REPORTS:
+        raise FileExistsError(
+            f"{out_dir.name} is historical evidence. Choose a new output directory."
+        )
     rng = np.random.default_rng(seed)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -87,8 +97,21 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
     def _prac_score(W_cand):
         return float(score_target(W_cand, x_prac_t, y_prac_t))
 
+    policy = WeightCrackPolicy(
+        allow_tensors=["W"],
+        max_entries=32,
+        max_fraction=0.5,
+        max_abs_delta=2.0,
+        allowed_ops=["project_remove"],
+    )
     search = practice_direction_search(
-        W_damaged, logits_fail, logits_success, _prac_score, strength=0.5
+        W_damaged,
+        logits_fail,
+        logits_success,
+        _prac_score,
+        policy,
+        "W",
+        strength=0.5,
     )
     search_direction = np.array(search["direction"]) if search and "direction" in search else direction
     search_cols = search.get("columns", heur_cols) if search else heur_cols
@@ -97,12 +120,6 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
     ctrl_rng = np.random.default_rng(seed + 1000)
     rand_cols = ctrl_rng.choice(16, size=2, replace=False).tolist()
 
-    policy = WeightCrackPolicy(
-        allow_tensors=["W"],
-        max_entries=32,
-        max_fraction=0.5,
-        max_abs_delta=2.0,
-    )
     base_hash = hashlib.sha256(np.ascontiguousarray(W_damaged).tobytes()).hexdigest()
 
     doses = [0.005, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16, 0.20]
@@ -214,5 +231,5 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
 
 if __name__ == "__main__":
     import sys
-    out = Path(sys.argv[1] if len(sys.argv) > 1 else "experiments/synthetic_v1")
+    out = Path(sys.argv[1] if len(sys.argv) > 1 else "experiments/synthetic_legacy_rerun")
     print(json.dumps(run_experiment(out), indent=2))

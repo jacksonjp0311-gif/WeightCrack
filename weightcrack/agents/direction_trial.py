@@ -1,11 +1,13 @@
 """Agent-facing direction trial.
 
-Delegates to the shared construction path used by application.
+This is the same construction and policy gate as ``localization.direction_trial``.
 """
 
 from typing import Any
+
 import numpy as np
 
+from ..schema import WeightCrackPolicy
 from .localization import direction_trial
 
 
@@ -15,6 +17,15 @@ def try_direction(
     columns: list[int],
     strength: float,
     practice_score_fn,
-    policy=None,
+    policy: WeightCrackPolicy,
+    tensor_name: str,
 ) -> dict[str, Any]:
-    return direction_trial(matrix, direction, columns, strength, practice_score_fn, policy)
+    return direction_trial(
+        matrix,
+        direction,
+        columns,
+        strength,
+        practice_score_fn,
+        policy,
+        tensor_name,
+    )

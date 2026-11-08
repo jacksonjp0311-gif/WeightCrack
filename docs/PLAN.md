@@ -1,93 +1,50 @@
-# WeightCrack Plan
+# WeightCrack plan
 
 ## Objective
 
-A host-gated meta-algorithm that can take a model, localize weights responsible for a target sector (math, coding, refusal, style, etc.), propose a sparse edit, have the host apply it under policy, and measure a performance upgrade on a frozen holdout while preserving sentinel behavior.
+Apply one sparse projection edit under a host policy and measure whether that edit changes predictions. The objective is not a general sector agent.
 
-## Current state
+## What the code does
 
-- Schemas, policy gate, receipt path, and evaluation loop contracts exist.
-- Direction-removal formula and preservation-memorization framing are documented.
-- Tensor-level apply and practice-only localization instruments are still stubs.
-- Prior WeightBridge pilots show direction removal can work (1/3 constrained cases, published-style reconstructions) while free-form proposal does not (0/20 direct transfer).
+- `project_remove` on one named float32 or float64 matrix, in float64, with one cast back to the source dtype.
+- Coordinate budgets, stored-delta checks, and exclusive `.wcbundle` publication.
+- One trial path shared with application. A trial cannot skip the policy gate.
+- A host `SessionConfig`. The caller does not supply a path, a policy, or a sector at propose time.
+- Verification that reconstructs stored values and checks source identity.
+- One preregistered synthetic classifier study, `experiments/proxy_fault_v1`.
 
-## Phase 1 — Make the working edit runnable
+## What the exit criteria still require
 
-**Status:** Done (NumPy proxy).
+Phase labels below are the original plan. "Done" is not used where the stated exit criterion is unmet.
 
-Direction-removal formula is implemented and verified by round-trip test (`tests/test_phase1.py`). Receipt is emitted. Safetensors loader can be layered on the same apply logic.
+### Phase 1 — runnable direction removal
 
-1. Finish the safetensors load / apply / write path in `weightcrack/patches/huggingface.py`.
-   - Support the closed-form column removal already specified in `docs/MATH.md`.
-   - Enforce policy bounds before any write.
-   - Emit a complete receipt with base hash, patch hash, policy hash, and changed-parameter count.
-2. Add a minimal CLI entry point: `weightcrack apply --base ... --patch ... --policy ... --out ...`.
-3. Verify round-trip: apply, reload, confirm hashes, confirm the mathematical operation matches the formula.
+The NumPy formula, receipt, and reload check exist (`tests/test_phase1.py`). The exit criterion also asked for a pinned Qwen apply. No real matrix has been edited. Safetensors loading is not implemented.
 
-**Exit criterion:** A known direction-removal patch can be applied to the pinned Qwen3.5-0.8B (or a smaller proxy) and the resulting candidate reloads with matching receipts.
+### Phase 2 — practice-only localization
 
-## Phase 2 — Practice-only localization instruments
+The direction is a normalized mean difference of two nonempty practice sets. It is one vector. `top_k` does not change it. Column ranking is absolute projection. `direction_trial` and `try_direction` call the same gated constructor. The exit criterion said the caller would not see raw weights. The session and the proxy proposer both receive the damaged matrix, because ranking reads it.
 
-**Status:** Done (NumPy proxy).
+### Phase 3 — sector suites
 
-Activation-difference singular vector, column ranking by projection, and host-executed direction trial are implemented and verified (`tests/test_phase2.py`). All operate on caller-supplied practice data only.
+`weightcrack/evaluation/suites.py` pins math and coding example text and exposes a string-match stub. The test checks hash length. It does not score a model.
 
-1. Activation-difference report (practice examples only).
-   - Mean residual or MLP output on failing examples minus mean on correct/sentinel examples.
-   - Return top singular vector as candidate direction \( u \).
-2. Column-ranking report.
-   - For a candidate \( u \), score columns by \( |u^\top W_{:, c}| \) and return top-k.
-3. Direction-trial primitive.
-   - Host applies the removal formula under the current policy budget, scores practice, returns the delta.
-   - No permanent write.
-4. Wire these as agent tools that never receive holdout paths or values.
+### Phase 4 — governed session
 
-**Exit criterion:** An agent (or scripted caller) can request a localization report, select a direction and column set, run a trial, and receive a practice delta without ever seeing raw weights or holdout data.
+`Session.propose` and `Session.trial` use the host config. The phase test checks that the saved array matches the trial. It does not measure holdout target gain. The proxy study is the behavioral measurement, and it did not meet the repair rule.
 
-## Phase 3 — Sector probe suites
+### Phase 5 — second sector
 
-**Status:** Done (stub).
+The same session accepts a host sector name other than a hardcoded `math_loop`. The coding suite hash is distinct from the math suite hash and is 64 hex characters. That is not a coding-performance result. The earlier phase-five test did not show a coding improvement; it exercised a matrix-norm callback and suite hashes.
 
-Hash-pinned practice/holdout/sentinel suite for math loop reduction is in place (`weightcrack/evaluation/suites.py`). Scoring stub counts exact matches. Real model generation can replace the stub.
+## Constraints the implementation keeps
 
-1. Define a narrow first sector (math repetition / loop reduction is the strongest existing signal).
-2. Pin practice examples, holdout examples, and sentinel controls with hashes.
-3. Implement the evaluation loop so it reports target gain and sentinel flips.
-4. Require both a minimum target gain and zero (or bounded) sentinel flips for a pass.
+- Unsupported operations are rejected.
+- Nonfinite inputs and nonfinite results are rejected. Invalid numbers are not clamped.
+- Existing artifacts are not replaced.
+- Held-out labels in the proxy study are outside the proposer argument list. The host writes `proposal_lock.json` before it opens `host_only/`. The event log records that order. This is not a hardened filesystem sandbox.
+- A successful bundle is disposition `applied`. Behavioral qualification is a separate field in the study report. The receipt leaves it null. The verifier rejects a receipt that claims a behavioral pass.
 
-**Exit criterion:** A candidate can be scored against the frozen suite and the result is recorded with the same hashes on every run.
+## Next work that this iteration did not do
 
-## Phase 4 — Agent loop under governance
-
-**Status:** Done (NumPy proxy).
-
-Session controller exposes only practice-only tools. Host gates and applies. Verified by end-to-end test (`tests/test_phase4.py`). Holdout remains inaccessible to the agent.
-
-1. Session controller that exposes only the Phase 2 tools and the practice suite.
-2. Agent proposes a `weightcrack.patch.v1`.
-3. Host gates, applies (or rejects), evaluates on holdout once, and appends a ledger record.
-4. Measure success rate on the induced-fault or loop-reduction suite.
-
-**Exit criterion:** At least one agent-proposed patch clears the full gate (policy, reload, target gain, sentinel preservation) on a frozen suite.
-
-## Phase 5 — Second sector and robustness
-
-**Status:** Done (NumPy proxy).
-
-Coding precision suite added. Same governed session, policy gate, and receipt path work on the second sector without relaxing invariants. Verified (`tests/test_phase5.py`).
-
-1. Add a second sector probe (coding precision or refusal strength).
-2. Confirm practice/holdout separation and receipt audit still hold.
-3. Document failure modes and any policy adjustments required.
-
-## Constraints that do not change
-
-- Agent never receives direct write access or holdout data.
-- Every candidate is a new file + receipt.
-- Policy gate remains the sole authority for application.
-- Practice and holdout stay separated by process boundary.
-- All claims remain scoped to the measured suite and model.
-
-## Immediate next step
-
-Finish the tensor-level apply path for the direction-removal formula (Phase 1). That is the smallest change that turns the documented math into a runnable candidate.
+Real-model loading, training, and any second fault or second dataset. `docs/REAL_MATRIX_STATUS.md` still records the failed Qwen download.

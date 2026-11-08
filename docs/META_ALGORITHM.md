@@ -1,46 +1,30 @@
-# Meta-algorithm sketch
+# Meta-algorithm as implemented
 
-## Objective
+## Scope
 
-Given a model and a target sector (math accuracy, coding precision, refusal strength, style consistency, etc.), produce a sparse weight edit that improves performance on that sector while preserving behavior on sentinel controls.
+One host-owned edit of one matrix, then an optional behavioral score. Sectors such as math accuracy or coding precision are names a host may put in `SessionConfig.sector`. The engine does not treat the name as evidence of that skill.
 
-## Loop
+## Steps that exist
 
-1. **Inspect**  
-   Header + bounded statistics + optional activation probes on practice examples only.
+1. The host freezes the tensor name, the source bytes, the policy, the sector, and the output directory.
+2. A proposal may choose columns and a strength inside that policy. It cannot replace the path or the policy.
+3. The host builds one `project_remove` candidate in float64, casts it to the source dtype, and rejects it when a coordinate budget or the stored absolute delta fails.
+4. A trial uses that same candidate. Application writes it only into a new `.wcbundle`, manifest last.
+5. `verify_bundle` recomputes the candidate from the normalized patch and compares stored values. A resave's byte identity is a separate flag.
+6. Behavioral status is recorded by the study harness. `applied` stays the file disposition. Invalid scores, missing manifests, and hash mismatches fail closed.
 
-## Localization (refined)
+## Localization that exists
 
-Host-executed, practice-only instruments:
+The practice direction is a normalized mean difference at a named activation site. On the proxy study that site is `post_linear_logits`, and its width is the row count of `W`. Ranking sorts columns by absolute projection. `top_k` does not create extra spectral components of the direction.
 
-- Activation difference: mean residual / MLP output on failing practice examples minus mean on correct or sentinel examples. Top singular vector is a candidate direction \( u \).
-- Column ranking: for a candidate \( u \), score columns by \( |u^\top W_{:, c}| \) and return the top-k.
-- Direction trial: host applies the closed-form removal
-  \[
-  W'_{:, c} = W_{:, c} - s \, u \, (u^\top W_{:, c})
-  \]
-  under the current policy budget, scores practice, and returns the delta. No permanent write.
+The preservation-memorization objective is not a step in this loop.
 
-Agent proposes a `weightcrack.patch.v1` that names the tensor, the direction, the columns, and the strength. Host gates and, if accepted, writes the candidate + receipt.
+## Proxy comparison
 
-3. **Propose**  
-   Agent emits a `weightcrack.patch.v1` grounded in the localization report and practice scores.
+The host derives one direction from damaged-model practice logits. Two methods share it: the top two ranked columns, and two columns drawn without replacement from a fixed control generator. Each method gets the same eight update-norm doses. Strengths are calibrated from source geometry before any candidate is scored. Selection uses practice corrections, practice losses, and preservation flips. Held-out labels are read after `proposal_lock.json` is on disk.
 
-4. **Gate**  
-   Host enforces policy (allow-list, max entries, fraction, abs delta, rank).
+The measured outcome is in `docs/PROXY_FAULT_V1.md`. The heuristic's held-out repair flag is false. The random arm did not qualify on practice.
 
-5. **Apply**  
-   New candidate checkpoint + immutable receipt.
+## Not in this loop
 
-6. **Evaluate**  
-   Frozen holdout: sector targets must improve; sentinel controls must not flip.
-
-7. **Record**  
-   Append-only ledger entry with hashes, practice/holdout separation proof, and disposition.
-
-## Next instruments to add
-
-- Bounded activation/attention probe report (practice-only).
-- Host-executed direction trial primitive (`try_direction` that returns practice delta under policy budget).
-- Sector-specific probe suites (hash-pinned).
-- Receipt verification and rollback path.
+Model training, a general agent framework, multi-tensor edits, and a real checkpoint. Suite files under `weightcrack/evaluation/suites.py` pin example text. Their hash checks do not score a model.

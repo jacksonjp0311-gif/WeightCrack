@@ -1,0 +1,63 @@
+{
+  "activation_site": "post_linear_logits",
+  "control_seed": 1111,
+  "doses": [
+    0.005,
+    0.01,
+    0.02,
+    0.04,
+    0.08,
+    0.12,
+    0.16,
+    0.2
+  ],
+  "match_tolerance": 0.001,
+  "policy": {
+    "allow_tensors": [
+      "W"
+    ],
+    "allowed_ops": [
+      "project_remove"
+    ],
+    "max_abs_delta": 2.0,
+    "max_entries": 8,
+    "max_fraction": 0.125,
+    "max_rank": 8,
+    "schema_id": "weightcrack.policy.v1"
+  },
+  "population": {
+    "heldout_preserve": 256,
+    "heldout_target": 256,
+    "practice_preserve": 128,
+    "practice_target": 128
+  },
+  "random_control": "uniform selection of two columns without replacement",
+  "ranking": "absolute projection onto the shared practice mean-difference direction",
+  "sector": "synthetic_classifier",
+  "selection_rule": "positive practice target corrections, zero practice target losses, zero practice preservation flips; then more corrections, smaller stored update norm, earlier dose index",
+  "shapes": {
+    "A": [
+      16,
+      8
+    ],
+    "W": [
+      4,
+      16
+    ],
+    "b": [
+      16
+    ],
+    "c": [
+      4
+    ],
+    "x": [
+      8
+    ]
+  },
+  "storage_dtype": "float32",
+  "study_id": "proxy_fault_v1",
+  "support_size": 2,
+  "tensor_name": "W",
+  "wall_limit_s": 60.0,
+  "working_dtype": "float64"
+}

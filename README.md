@@ -1,36 +1,62 @@
 # WeightCrack
 
-Host-gated sparse projection edits on NumPy matrices, with coordinate-level accounting and exclusive artifact creation.
+Host-gated sparse projection edits on NumPy matrices. This repository implements one operation, enforces a coordinate budget, and records one synthetic classification study.
 
-## What is implemented
+## Implemented
 
-- `project_remove` on a single matrix stored as `weight` in an `.npz`.
-- Working precision float64; storage dtype of the source is preserved.
-- Strengths in (0, 2]; values above 1 reverse the projected component.
-- Policy enforces `max_entries` and `max_fraction` on the union of touched coordinates, and `max_abs_delta` on the realized stored difference after casting.
-- Exclusive output bundles: no overwrite of existing candidates or receipts; source/output aliases are rejected.
-- Receipts bind source content hash, candidate file hash, candidate content hash, patch, policy, and accounting.
-- Practice-only localization instruments (mean-difference direction, column ranking by absolute projection) and a shared trial path that scores the same rounded candidate that would be saved.
-
-## What is not implemented
-
-- Safetensors / Hugging Face loading.
-- Multiple tensors, low-rank updates, or the full preservation-memorization solver.
-- Real language-model evaluation.
-- Process-level isolation beyond ordinary path separation.
-
-## Bounded experiment
-
-A single synthetic 8-16-4 classifier with one fixed rank-one fault on two columns of W. Practice-only mean-difference direction, heuristic vs random column selection, eight doses, held-out evaluation after locking.
-
-Command:
+`project_remove` updates selected columns of one named matrix:
 
 ```
-python -m weightcrack.evaluation.synthetic_experiment experiments/synthetic_v1
+W'[:, c] = W[:, c] - s * u * (u^T W[:, c])
 ```
 
-On the pre-registered seed the result was NO_QUALIFIED_CANDIDATE for both methods. That is a completed measurement, not a failure of the harness.
+`u` is the unit direction. `s` is in `(0, 2]`. Strength 1 removes the projected component. Strengths above 1 reverse it: the stored coefficient along `u` is `(1 - s)` times the original coefficient. Arithmetic uses float64, then one cast back to the source dtype. Supported storage dtypes are float32 and float64.
 
-## Evidence boundaries
+The edited tensor must be named. An in-memory array is bound with an explicit `tensor_name`. An `.npz` source is addressed by a real key. Arbitrary labels do not all point at one anonymous matrix.
 
-External MATH/GSM/IFEval numbers and WeightBridge LoRA studies are not measurements of this repository. The earlier phase tests exercised matrix-norm callbacks and suite hashes; they did not demonstrate sector improvement.
+Budgets count distinct scalar coordinates of that tensor. `max_entries` and `max_fraction` use the union of those coordinates. The fraction denominator is the edited tensor's scalar count. Receipts also report the operation count and how many stored values actually changed. `max_abs_delta` is the maximum absolute difference between stored source values and stored candidate values.
+
+A candidate is a new `.wcbundle` directory. `np.savez` receives an exclusively opened file handle, so it cannot append `.npz` to the caller's path. Existing candidate, receipt, and bundle paths are rejected. The completion manifest is written last. Readers reject a directory without a valid manifest. A failed attempt deletes only the directory that attempt created.
+
+Receipts are `weightcrack.receipt.v2`. Disposition `applied` means the file write passed the policy gate. It does not mean a behavioral pass. `verify_bundle` checks the receipt, the policy, the source identity, and exact stored-value reconstruction. Full-file byte identity of a resave is measured separately.
+
+`Session` takes a frozen host config: task id, tensor name, sector, policy, and output root. `propose` and `trial` select columns and strength only. Trials score the same policy-admitted stored candidate that application would save.
+
+The localization direction is the normalized mean difference of two practice activation sets. `top_k` is recorded and does not change that vector. Column ranking uses absolute projection onto that one direction. A large score maximizes removal at a fixed strength. It does not show that the column caused an error.
+
+## Not implemented
+
+- A preservation-memorization solver. The objective in `docs/MATH.md` is motivation.
+- Safetensors or Hugging Face loading, and any real language-model edit.
+- More than one change, or operations other than `project_remove`.
+- A filesystem sandbox. The proxy proposer is a subprocess with a fixed argument list. A modified proposer could still open sibling files.
+
+## Reproduce the proxy study
+
+From this repository:
+
+```
+python -m weightcrack.evaluation.proxy_experiment experiments/proxy_fault_v1
+python -m weightcrack.evaluation.verify_proxy experiments/proxy_fault_v1
+```
+
+The first command refuses to overwrite an existing directory. The study is `f(x) = argmax(W tanh(Ax + b) + c)` with shapes 8, 16, and 4. Seeds, the two-column fault, the dose grid, and the budgets are constants in `weightcrack/evaluation/proxy_experiment.py`. Details and the measured result are in `docs/PROXY_FAULT_V1.md`.
+
+On this machine the study finished in 0.9394292000215501 seconds. The absolute-projection heuristic did not meet the held-out repair rule. The random control had no practice-qualified candidate. That is the result.
+
+## Tests
+
+```
+python -m pytest tests -q --tb=line
+```
+
+The run on Python 3.12.10 was 23 passed and 1 warning. `tests/test_phase3.py` returns `True`; pytest warns and the assertions still ran. Phase 3 checks hash lengths of pinned text. Phase 5 checks the same session gate under a second sector name and those hash lengths. Neither test is a coding or math improvement.
+
+## Evidence that is not a WeightCrack measurement
+
+- The 0/20 direct-proposal cohort used a pinned local Qwen controller on synthetic ToyMLP targets. It finalized no candidates. See WeightBridge `docs/AGENT_TOOLS.md` at commit `baa336e7c517139876a1a5d6309af7199ea1e661`.
+- WeightBridge Phase P, same commit, `docs/PHASE_III_P.md`: a reconstructed published edit moved 3/48 target presentations to 8/48, with six corrections, one regression, and 24/24 non-target controls retained. Zero-regression qualification failed.
+- WeightBridge Phase Q and Phase R, same commit, are supervised LoRA studies. They do not test this column-ranking heuristic.
+- External authors' math and instruction numbers are their claims.
+
+Historical WeightCrack runs under `experiments/synthetic_v1`, `experiments/synthetic_strong`, and `experiments/synthetic_search` are unchanged. `docs/REAL_MATRIX_STATUS.md` records that no real matrix was loaded.

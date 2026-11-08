@@ -1,51 +1,51 @@
-# Refined localization and edit math
+# Projection math and what was measured
 
-## Core observation
+## Implemented operation
 
-On the Qwen3.5-0.8B pilots, the edits that cleared the locality gate were not dense fine-tunes. They were removals of a small number of directions written into specific MLP output columns (notably layers 15 and 19 in the published-style reconstruction). Changing ~0.016 % of weights by subtracting a single direction from 64 columns produced large shifts on math and instruction-following probes while leaving sentinels intact.
+For a matrix `W`, a direction `d` with nonzero finite norm, columns `C`, and strength `s` in `(0, 2]`:
 
-This matches the broader locate-then-edit literature (ROME/MEMIT/EMMET) and the recent weight-space programming results: the useful intervention is often a low-rank update or an explicit projection removal, not a coordinate-wise scatter of values.
+```
+u = d / ||d||
+W'[:, c] = W[:, c] - s * u * (u^T W[:, c])    for c in C
+```
 
-## Preservation-memorization objective
+The code computes this in float64 and casts once to the source dtype. Untouched columns keep their stored values. `s = 1` removes the component along `u`. For `s > 1` the stored component is `(1 - s)` times the original component, which reverses it. The interval `(0, 2]` is not pure removal.
 
-For a weight matrix \( W \) and a set of key vectors we wish to preserve (\( K_0 \)) and a set we wish to rewrite (\( K_e \)):
+Touched coordinates are `rows * |C|` after duplicate columns are rejected. The fraction denominator is `W.size`, the edited tensor only. `max_abs_delta` compares stored source entries with stored candidate entries.
 
-\[
-\min_{\hat{W}} \| \hat{W} K_0 - W K_0 \|_F^2 + \lambda \| \hat{W} K_e - V_e \|_F^2
-\]
+## Implemented direction
 
-ROME solves the equality-constrained form for a single edit via a closed-form rank-one update. MEMIT relaxes to least-squares and distributes the update across layers. EMMET restores the equality constraint for the batched case.
+On the proxy study the activation site is `post_linear_logits`: the class scores `W tanh(Ax + b) + c` of the damaged model. The direction is
 
-For the current WeightCrack target (sector repair rather than fact insertion), the practical reduction is simpler: identify a direction \( u \) that is active on failing practice examples and weakly active on sentinels, then subtract a controlled multiple of its outer product from a small set of columns.
+```
+normalize(mean(logits | practice target wrong) - mean(logits | practice target correct))
+```
 
-## Direction-removal formula (first-class)
+That is one normalized mean difference. `activation_difference` accepts `top_k` and does not use it to build further components. There is no SVD in that function. If either practice set is empty, or the difference norm is zero or nonfinite, the status is `NO_LOCALIZATION_SIGNAL` and the task is not regenerated.
 
-Given a matrix \( W \in \mathbb{R}^{d \times n} \), a unit vector \( u \in \mathbb{R}^{d} \), a set of columns \( C \), and a strength \( s \in (0, 2] \):
+Column ranking scores `|u^T W[:, c]|`. Taking the top two columns maximizes projection-removal magnitude at a fixed strength. It is not a causal attribution. The proxy comparison uses that ranking against a uniform random pair and the same `u`. It tests column selection, not direction discovery.
 
-\[
-W'_{:, c} = W_{:, c} - s \, u \, (u^\top W_{:, c}) \quad \forall c \in C
-\]
+## Preservation-memorization
 
-This is exactly the operation already supported in the adapted patch path. The host can execute it under the existing policy bounds (max entries, max fraction, max abs delta after rounding).
+The least-squares objective that preserves some keys and rewrites others is background from the locate-then-edit literature. This repository does not implement or validate that solver.
 
-## Localization instruments that stay practice-only
+## WeightCrack measurement
 
-1. **Activation difference**  
-   Mean residual or MLP output on failing practice examples minus mean on sentinel or correct examples. Top singular vector of the difference is a candidate \( u \).
+`experiments/proxy_fault_v1` is one frozen synthetic fault on `W` of an 8-16-4 classifier. The injected columns were `[10, 7]`. The heuristic selected `[13, 4]`. The random control selected `[12, 13]`.
 
-2. **Finite-difference sensitivity**  
-   Host-executed: add a small probe along a candidate direction, measure practice score change, return the delta. Agent never sees the raw weights.
+Practice targets: 10 incorrect and 118 correct, out of 128. The heuristic finalist, dose index 2, had 1 practice correction, 0 practice losses, and 0 preservation flips. The random arm had no practice-qualified dose (`NO_QUALIFIED_CANDIDATE`).
 
-3. **Column ranking**  
-   For a candidate \( u \), rank columns by \( |u^\top W_{:, c}| \). The top-k columns are the natural target set for the removal.
+Held-out, after the lock: the damaged model was correct on 238 of 256 target inputs. The heuristic finalist made 2 corrections and 1 loss (239 correct) and flipped 3 of 256 preservation predictions. `behavioral_repair` is false. The no-edit control matched the damaged model exactly. Wall time was 0.9394292000215501 seconds. Value reconstruction of the 16 applied bundles passed. See `docs/PROXY_FAULT_V1.md`.
 
-These three instruments turn the agent into a selector over host-computed candidates rather than a free-form weight writer. That is the gap the current pilots still show (direct transfer 0/20, constrained pilot 1/3).
+This is bounded recovery evidence for one injected fault, and the repair rule failed. It is not a language-model result.
 
-## What remains under the existing invariants
+## Separate claims
 
-- Practice suite only for all localization and trial steps.
-- Holdout opened once, after candidate selection, by the host.
-- Policy gate still enforces allow-list, entry count, fraction, and delta.
-- Every candidate is a new file + receipt.
+These are not WeightCrack measurements. They are cited from WeightBridge commit `baa336e7c517139876a1a5d6309af7199ea1e661`. That commit is not the default main branch, which does not contain the later research narrative.
 
-The math that has already produced measured gains fits inside those constraints. The next concrete step is to expose the activation-difference and column-ranking reports as first-class, bounded tools the agent can call.
+- Direct proposal, `docs/AGENT_TOOLS.md`: a pinned local Qwen controller, 20 blinded patch-form tasks on synthetic ToyMLP targets, zero finalized candidates, zero repairs.
+- Phase P, `docs/PHASE_III_P.md`: reconstructed published edit, 3/48 target presentations to 8/48, six corrections, one regression, 24/24 non-target controls retained. Zero-regression qualification failed. The note says this is not a new WeightBridge learning result.
+- Phase Q, `docs/PHASE_III_Q_BASELINE.md`: supervised LoRA, `VERIFIED_BASELINE_PASS`, rank 8, 5,411,328 parameters. Not a column search.
+- Phase R, `docs/PHASE_III_R_REPLICATION.md`: rank-eight `VERIFIED_REPLICATION_PASS`. Rank-four `TRANSFER_WITH_PRESERVATION_FAILURE`.
+
+Broader math and instruction numbers published by other authors are their results.
