@@ -1,0 +1,19 @@
+{
+  "files": {
+    "confirmation_bank.npz": "6df27e4568c578fa7d7997c4e302c579ee5e9563b72b6f857f5f27e7c0a37087",
+    "confirmation_disclosure.json": "1f813b8a3ffb0a7af332205cd0d70af8993ef9d420558e66b07983d2fda98d10",
+    "damaged_source.npz": "2c9a0a18a751d61f65c9a71cf50e3fc2b61a08b14ce2592ac0b4b07dbee380f4",
+    "host_config.json": "050472aaba152191851dcb4c81f03645aafca94a9b3be821b844373034fb28ed",
+    "intact_model.npz": "0b038b72ca19e2b5ec030252891d94e7bda9557a4b950516751e96f0caf2a291",
+    "practice_export.npz": "383b5155f02a277b9de5861382a67e37190ba30cf41dcfcd8cd7898f45dfc196",
+    "public_config.json": "01f46d70181bb44dc724b720dc3e8ab427ebc5addf2a9da58a52c4b7e7d1950a"
+  },
+  "host_files_in_protocol_commit": false,
+  "schema": "weightcrack.support_commitment.v1",
+  "source_identity": {
+    "weightcrack/evaluation/support_experiment.py": "3c25c10539940389881c9982c972bb24e1eadbe08c99f9551917822634e2ebbf",
+    "weightcrack/evaluation/support_proposer.py": "2086d0c814987bf3ff24fb32eb4f9aa429782a2f1fcaff54faed820ca2fbb11f",
+    "weightcrack/evaluation/support_rank.py": "d2fe81fcd9baed8fd640b4dc24e1f300353f76cb978f3ce03424de914ae4c658"
+  },
+  "study_id": "proxy_support_v3"
+}

@@ -1,0 +1,76 @@
+{
+  "activation_site": "post_linear_logits",
+  "comparison_rule": "A method confirms only when its locked finalist meets the confirmation rule. If both confirm, more target corrections decides. An equal count is NO_CONFIRMATION_WINNER. If neither confirms, the result is NEITHER_METHOD_CONFIRMED. This comparison does not create candidates.",
+  "confirmation_rule": "positive confirmation target corrections, zero confirmation target losses, zero confirmation preservation flips",
+  "contribution_tolerance_scale": 1e-12,
+  "direction_rule": "leading eigenvector of (G @ W.T + W @ G.T) / 2 with the v2 eigenvalue gate",
+  "doses": [
+    0.005,
+    0.01,
+    0.02,
+    0.04,
+    0.08,
+    0.12,
+    0.16,
+    0.2
+  ],
+  "fault_rule": "numpy Generator(fault_seed).choice of two columns without replacement, then a normalized standard_normal direction of length 4, then one project_remove at strength 1.0. The realized columns are host-only.",
+  "fault_strength": 1.0,
+  "loss_sign_tolerance": 1e-12,
+  "magnitude_rule": "top two |u.T W[:,j]| with ascending-index ties",
+  "match_tolerance": 0.001,
+  "maximum_candidate_slots": 16,
+  "methods": [
+    "magnitude_projection",
+    "signed_loss_contribution"
+  ],
+  "policy": {
+    "allow_tensors": [
+      "W"
+    ],
+    "allowed_ops": [
+      "project_remove"
+    ],
+    "max_abs_delta": 2.0,
+    "max_entries": 8,
+    "max_fraction": 0.125,
+    "max_rank": 8,
+    "schema_id": "weightcrack.policy.v1"
+  },
+  "population": {
+    "confirmation_preserve": 256,
+    "confirmation_target": 256,
+    "practice_preserve": 128,
+    "practice_target": 128
+  },
+  "question": "Does selecting the two columns with the largest positive predicted loss reduction produce a better compensating edit than selecting the two columns with the largest projection magnitude, when both use the same loss-sensitive direction?",
+  "sector": "synthetic_classifier",
+  "seed_location": "host_only/host_config.json, bound by public_commitment.json before the trial and disclosed after confirmation",
+  "selection_rule": "positive practice target corrections, zero practice target losses, zero practice preservation flips; then more corrections, smaller stored update norm, earlier dose index",
+  "shapes": {
+    "A": [
+      16,
+      8
+    ],
+    "W": [
+      4,
+      16
+    ],
+    "b": [
+      16
+    ],
+    "c": [
+      4
+    ],
+    "x": [
+      8
+    ]
+  },
+  "signed_rule": "top two a_j = (u.T G[:,j]) * (u.T W[:,j]) among a_j > 1e-12 * max(1, max |a_j|), ascending-index ties; otherwise INSUFFICIENT_DESCENT_SUPPORT",
+  "storage_dtype": "float32",
+  "study_id": "proxy_support_v3",
+  "support_size": 2,
+  "tensor_name": "W",
+  "wall_limit_s": 60.0,
+  "working_dtype": "float64"
+}
