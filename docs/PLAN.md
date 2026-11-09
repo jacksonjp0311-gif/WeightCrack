@@ -45,6 +45,16 @@ The same session accepts a host sector name other than a hardcoded `math_loop`. 
 - Held-out labels in the proxy study are outside the proposer argument list. The host writes `proposal_lock.json` before it opens `host_only/`. The event log records that order. This is not a hardened filesystem sandbox.
 - A successful bundle is disposition `applied`. Behavioral qualification is a separate field in the study report. The receipt leaves it null. The verifier rejects a receipt that claims a behavioral pass.
 
-## Next work that this iteration did not do
+## What the proxy studies measured
 
-Real-model loading, training, and any second fault or second dataset. `docs/REAL_MATRIX_STATUS.md` still records the failed Qwen download.
+`proxy_fault_v1` asked whether an absolute-projection column edit could repair held-out predictions. The practice gate accepted one candidate. The held-out bank did not: the repair rule failed, and the random arm had no practice-qualified candidate. `behavioral_repair` is false.
+
+`proxy_direction_v2` asked whether a loss-sensitive direction was more useful than a mean-logit direction when both were restricted to the two largest-magnitude columns. The comparison is `NEITHER_METHOD_CONFIRMED`. The full-matrix loss derivative was a predicted descent, `-0.052331545871127094`. The same direction on columns `[4, 10]` was a predicted ascent, `+0.02018349511452412`. The loss-sensitive arm had no practice-qualified candidate. The mean-logit arm qualified on practice and failed the fresh bank.
+
+`proxy_support_v3` asked whether choosing those two columns by positive predicted loss reduction would differ from choosing them by projection magnitude. On the one preregistered draw, both rules selected columns `[0, 6]` and saved the same eight matrices. The selected-support derivative was negative, and its sign matched the measured practice-loss change on all 16 slots. The smallest dose qualified on practice. On the fresh bank it made one target correction, zero target losses, and two preservation flips, so the confirmation rule fails. The comparison is `NEITHER_METHOD_CONFIRMED`. The signed rule did not show an advantage on this draw. Details are in `docs/PROXY_SUPPORT_V3.md`.
+
+The working question is whether an estimated beneficial full-matrix direction remains beneficial after the edit is forced onto a small set of columns. That question is a label for these studies. It is not a claim that the label is a new formal framework, and these three synthetic cases do not show reliable autonomous improvement.
+
+## Next work that these studies did not do
+
+Real-model loading and training. `docs/REAL_MATRIX_STATUS.md` still records the failed Qwen download. No further support-ranking variant was added after the v3 result.

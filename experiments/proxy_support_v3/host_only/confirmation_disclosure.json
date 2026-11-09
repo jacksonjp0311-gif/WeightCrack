@@ -1,0 +1,13 @@
+{
+  "blinded_fault_replication": false,
+  "confirmation_preserve_label_sha256": "dbf71c6741fa233ee0ebd6f6e95fa7712fc4129e606b43d350ea8945c539ee94",
+  "confirmation_preserve_sha256": "82131160ce8a1ccc186927941caf0f3742c0db57761ca6fcf4d31bac8300c0e6",
+  "confirmation_seed": 1116,
+  "confirmation_target_label_sha256": "d68c1a5290749ba618b0f05cb5ee14b678c1c5456948b8daae16ced84edc1181",
+  "confirmation_target_sha256": "9f94a9e533134bfb410803212680837843a107bc84fb858df7d33bec197b05c9",
+  "known_generator": true,
+  "label_rule": "argmax of the intact teacher",
+  "process_boundary": "The proposer subprocess arguments are the practice export, public config, damaged source, candidates directory, and a deadline. The confirmation bank and the intact teacher are not arguments. Process separation is not a filesystem sandbox.",
+  "schema": "weightcrack.support_disclosure.v1",
+  "study_id": "proxy_support_v3"
+}

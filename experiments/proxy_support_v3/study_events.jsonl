@@ -1,1 +1,5 @@
 {"commitment_sha256": "619e9daf2e77afd59aad6043efa69c4325993789ffbb548e5adda61a121b3d36", "stage": "host_committed", "study_id": "proxy_support_v3"}
+{"code": 0, "stage": "proposer_returned"}
+{"lock_sha256": "909b9193907153891721a499e89587603b751619664275ce2afa4b9614fefbff", "stage": "lock_written"}
+{"stage": "confirmation_opened"}
+{"stage": "report_written", "status": "complete"}

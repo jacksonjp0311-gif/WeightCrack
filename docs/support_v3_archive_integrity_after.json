@@ -1,0 +1,8 @@
+{
+  "compared_to": "docs/support_v3_archive_integrity.json",
+  "groups": 6,
+  "checked": 156,
+  "missing": 0,
+  "changed": 0,
+  "when": "after the official proxy_support_v3 run and verify_support"
+}

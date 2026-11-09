@@ -52,6 +52,12 @@ python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2
 
 A second run needs an empty directory, for example `experiments/proxy_direction_v2_replay`. The official directory refuses an overwrite.
 
+The support comparison is `experiments/proxy_support_v3`, recorded in `docs/PROXY_SUPPORT_V3.md`. Both column rules selected columns `[0, 6]` and produced the same stored edits. The comparison is `NEITHER_METHOD_CONFIRMED`. The fresh-bank finalist made one target correction and two preservation flips. `behavioral_repair` is false.
+
+```
+python -m weightcrack.evaluation.verify_support experiments/proxy_support_v3
+```
+
 On this machine the study finished in 0.9394292000215501 seconds. The absolute-projection heuristic did not meet the held-out repair rule. The random control had no practice-qualified candidate. That is the result.
 
 ## Tests
@@ -60,7 +66,7 @@ On this machine the study finished in 0.9394292000215501 seconds. The absolute-p
 python -m pytest tests -q --tb=line
 ```
 
-The run on Python 3.12.10 was 34 passed and 1 warning. `tests/test_phase3.py` returns `True`; pytest warns and the assertions still ran. Phase 3 checks hash lengths of pinned text. Phase 5 checks the same session gate under a second sector name and those hash lengths. Neither test is a coding or math improvement.
+The run on Python 3.12.10 after the support-comparison tests was 42 passed and 1 warning, in 4.92 seconds. `tests/test_phase3.py` returns `True`; pytest warns and the assertions still ran. Phase 3 checks hash lengths of pinned text. Phase 5 checks the same session gate under a second sector name and those hash lengths. Neither test is a coding or math improvement.
 
 ## Evidence that is not a WeightCrack measurement
 

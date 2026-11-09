@@ -1,0 +1,23 @@
+{
+  "confirmation_seed": 1116,
+  "contribution_tolerance_rule": "1e-12 * max(1, max abs a_j)",
+  "damaged_W_sha256": "750d29ce4352ccc265d50bef9ccfa90430b1e92da24028fb66cca9c4ba19c38e",
+  "data_seed": 1114,
+  "fault_changed_coordinates": 8,
+  "fault_columns": [
+    3,
+    0
+  ],
+  "fault_direction_f64_hex": "4e0211480c1aec3fb670db47ee52a83f383a9643529dd2bfc0d46c31d81cd83f",
+  "fault_rule": "numpy Generator(fault_seed).choice of two columns without replacement, then a normalized standard_normal direction of length 4, then one project_remove at strength 1.0. The realized columns are host-only.",
+  "fault_seed": 1115,
+  "fault_strength": 1.0,
+  "generator": "numpy.random.Generator.standard_normal; parameters and inputs cast once to float32",
+  "intact_W_sha256": "d5275585b509d340719cbc94a8fb33455e3dd1e1bfd8d1a3eba36189d212cf32",
+  "label_rule": "argmax of intact post_linear_logits",
+  "model_seed": 1113,
+  "numpy": "2.5.4",
+  "python": "3.12.10",
+  "schema": "weightcrack.support_host.v1",
+  "study_id": "proxy_support_v3"
+}

@@ -81,3 +81,40 @@ python -m weightcrack.evaluation.verify_support experiments/proxy_support_v3
 `SEEDS.json` stays outside the repository until `host_only/` is disclosed. `prepare` refuses a nonempty directory and refuses the archived experiment names. `run` refuses an existing selection or report. The official `run` ceiling is 60 seconds and does not include `prepare` or unit tests.
 
 No real language-model checkpoint is loaded. `docs/REAL_MATRIX_STATUS.md` still records that limit.
+
+## Measured result
+
+The protocol commit is `a03425c6f2349136bbbf0e38dac5dc185fbac28a`. It contains the proposer inputs and `public_commitment.json`. It does not contain `host_only/`. The official `run` then wrote the lock, opened the confirmation bank, and wrote `experiment_report.json`. This section was written after that run. The trial was not repeated.
+
+Disclosed host configuration, from `host_only/host_config.json`:
+
+- Model seed `1113`, data seed `1114`, fault seed `1115`, confirmation seed `1116`.
+- Fault columns `[3, 0]`, fault strength `1.0`, eight changed coordinates.
+- Python `3.12.10`, NumPy `2.5.4`.
+
+`verify_support` reported `status=verified`, `study_status=complete`, wall `0.7759591999929398` seconds, comparison `NEITHER_METHOD_CONFIRMED`. The run itself returned status code 0 with that same comparison. The wall clock is under the 60-second ceiling. Sixteen slots were applied and zero were rejected. Every applied bundle reconstructed its stored values. The resave of each applied candidate matched the saved bytes on this machine.
+
+The loss-sensitive direction passed the existing uniqueness gate. Its content hash is `82697467246233f47dceb3e5e361afda17999fda2b299eb51290ecfbf8411688`. The largest eigenvalue is `0.15391471415070682`, the second is `0.06598281873605817`, and the gap is `0.08793189541464864`. The tolerance is `1e-12`. The full-matrix derivative is `-0.15391471415070684`.
+
+Both rankings selected columns `[0, 6]`. Magnitude scores were `1.6485727103898251` and `1.5114685068783975`. Signed contributions on those columns were `0.21284183531471276` and `0.15166652915083903`. Ten columns had a strictly positive contribution. The signed rule kept two of them. The selected-support derivative on `[0, 6]` is `-0.36450836446555185`.
+
+The eight doses produced the same stored matrix under both methods. Each pair of bundles has the same candidate content hash and the same candidate file hash. The experimental variable therefore did not create two different edits on this draw. The locked finalist for each method is dose `0.005`, bundle index `00`, strength `0.017956306007532792`, stored update norm `0.040160910798450605`, eight touched coordinates, fraction `0.125`, and maximum absolute stored delta `0.02596902847290039`. The shared candidate content hash is `966d7885a1f35f15bfd538385c2c3f036972a31e421eb177ce00891b6a90f140`.
+
+Practice, 128 target rows: the damaged model had 102 correct. The dose `0.005` edit had 103 correct, one correction, zero losses, and zero preservation flips, so it qualified. The seven larger doses also reduced practice cross-entropy and increased target corrections, and each of them changed at least two preservation predictions, so they did not qualify. From dose `0.08` upward they also lost previously correct target predictions.
+
+Confirmation, 256 fresh target rows: the no-edit control stayed at 211 correct, with zero corrections, zero losses, and zero preservation flips. Each locked finalist moved that count from 211 to 212: one target correction, zero target losses, and two preservation flips. Both flips were changes from an incorrect preservation answer to the teacher label. The preregistered rule still requires zero preservation flips, so `behavioral_repair` is false for both methods. The comparison is `NEITHER_METHOD_CONFIRMED`.
+
+On all 16 applied slots the sign of the first-order prediction matches the sign of the measured practice-target cross-entropy change. Both are negative. At dose `0.005` the prediction is `-0.006545223734648741` and the measured change is `-0.006463649848455821`. At dose `0.20` the prediction is `-0.2618083606177329` and the measured change is `-0.1200677152725444`. The local derivative's sign survived these sparse, finite, stored edits. The linear magnitude is a poorer description at the larger strengths. That diagnostic was not used to choose another column or another dose.
+
+## Interpretation
+
+On this one case, selecting support by positive predicted loss reduction produced the same two columns as selecting support by projection magnitude. The shared edit lowered practice cross-entropy and met the practice gate at the smallest dose. It did not meet the confirmation gate, because two preservation predictions changed. The signed rule therefore shows no advantage over the magnitude rule here. One synthetic draw does not establish a general editing method, and this repository has not compared the working label "support–direction compatibility" with the literature.
+
+## Checks
+
+- `python -m pytest tests/test_support_v3.py -q --tb=short`: 8 passed in 2.05 seconds.
+- `python -m pytest -q --tb=line`: 42 passed, 1 warning, in 4.92 seconds. The warning is the existing `tests/test_phase3.py::test_suite_pins_and_scoring` return value.
+- `prepare` returned status code 0 before the protocol commit.
+- `run` returned status code 0. Wall time `0.7759591999929398` seconds.
+- `python -m weightcrack.evaluation.verify_support experiments/proxy_support_v3` returned `status=verified`.
+- The pre-edit manifest `docs/support_v3_archive_integrity.json` still matches the six archived experiment directories: 156 files, 0 missing, 0 changed. That comparison was repeated after the official run.

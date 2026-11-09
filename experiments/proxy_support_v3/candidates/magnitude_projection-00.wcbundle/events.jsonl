@@ -1,0 +1,11 @@
+{
+  "behavioral_qualification": null,
+  "candidate_file_sha256": "72cff36b32906ed974b025c3fd2029de368e47c55198521121b595f7e8ba64f1",
+  "disposition": "applied",
+  "patch_sha256": "eda5ab805f59235f218f333809772d26161c98ab808c9fa91c6fc12627a33eba",
+  "policy_sha256": "e0c502c0a37449677fa5991db1b9e1a7f78b0ad3427554420ac3d17e3640bfca",
+  "schema": "weightcrack.event.v1",
+  "status": "applied",
+  "task_id": "magnitude_projection-00",
+  "tensor": "W"
+}

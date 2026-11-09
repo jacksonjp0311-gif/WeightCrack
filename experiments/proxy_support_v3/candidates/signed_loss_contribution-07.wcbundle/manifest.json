@@ -1,0 +1,18 @@
+{
+  "files": {
+    "candidate.npz": {
+      "nbytes": 1806,
+      "sha256": "08cc181384a6660070c74f8c9f2c170ec336d58f965364ab47c5d143e138cc7c"
+    },
+    "events.jsonl": {
+      "nbytes": 455,
+      "sha256": "a082afa0cecf1c9a531d1a92d2d878bc7c1dc644c76246c7f212aa0e868150aa"
+    },
+    "receipt.json": {
+      "nbytes": 4094,
+      "sha256": "0f97b86c1c14dd4458e9ef298ee6335211379ed319f2fc97558e4492b7846d90"
+    }
+  },
+  "schema": "weightcrack.bundle.v1",
+  "status": "complete"
+}
