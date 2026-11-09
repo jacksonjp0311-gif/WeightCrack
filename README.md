@@ -42,6 +42,17 @@ python -m weightcrack.evaluation.verify_proxy experiments/proxy_fault_v1
 
 The first command refuses to overwrite an existing directory. The study is `f(x) = argmax(W tanh(Ax + b) + c)` with shapes 8, 16, and 4. Seeds, the two-column fault, the dose grid, and the budgets are constants in `weightcrack/evaluation/proxy_experiment.py`. Details and the measured result are in `docs/PROXY_FAULT_V1.md`.
 
+Bundle verification reconstructs through the same application gate as a normal edit. A fresh resave boolean is recorded separately from the historical one. `docs/VERIFIER_REPAIR.md` has the commands and the current-machine observation.
+
+The next frozen study compares two practice directions on the same damaged model:
+
+```
+python -m weightcrack.evaluation.direction_experiment experiments/proxy_direction_v2
+python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2
+```
+
+Its protocol is `docs/PROXY_DIRECTION_V2.md`. It does not replace the v1 constants or add a random arm.
+
 On this machine the study finished in 0.9394292000215501 seconds. The absolute-projection heuristic did not meet the held-out repair rule. The random control had no practice-qualified candidate. That is the result.
 
 ## Tests
@@ -50,7 +61,7 @@ On this machine the study finished in 0.9394292000215501 seconds. The absolute-p
 python -m pytest tests -q --tb=line
 ```
 
-The run on Python 3.12.10 was 23 passed and 1 warning. `tests/test_phase3.py` returns `True`; pytest warns and the assertions still ran. Phase 3 checks hash lengths of pinned text. Phase 5 checks the same session gate under a second sector name and those hash lengths. Neither test is a coding or math improvement.
+The run on Python 3.12.10 was 34 passed and 1 warning. `tests/test_phase3.py` returns `True`; pytest warns and the assertions still ran. Phase 3 checks hash lengths of pinned text. Phase 5 checks the same session gate under a second sector name and those hash lengths. Neither test is a coding or math improvement.
 
 ## Evidence that is not a WeightCrack measurement
 

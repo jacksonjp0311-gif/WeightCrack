@@ -1,0 +1,19 @@
+{
+  "archive": "experiments/proxy_fault_v1",
+  "archive_rewritten": false,
+  "command": "python -m weightcrack.evaluation.verify_proxy experiments/proxy_fault_v1",
+  "current_resave_byte_identical": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+  "current_runtime": {"numpy": "2.5.4", "python": "3.12.10", "platform": "win32"},
+  "historical_resave_byte_identical": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+  "note": "A match between these two boolean lists is an observation on this runtime. Verification does not require it. Tensor reconstruction and original file hashes remain the integrity checks.",
+  "resave_matches_historical_on_this_runtime": true,
+  "study_status": "complete",
+  "tests": {
+    "command": "python -m pytest tests -q --tb=line",
+    "passed": 34,
+    "seconds": 3.31,
+    "warning": "tests/test_phase3.py::test_suite_pins_and_scoring returned bool"
+  },
+  "value_exact_reconstruction": true,
+  "wall_seconds": 0.9394292000215501
+}
