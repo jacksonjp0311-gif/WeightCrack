@@ -4,7 +4,7 @@ Study id: `proxy_direction_v2`.
 
 Question: does a direction informed by supervised practice loss produce a better compensating edit than the existing difference between mean incorrect and mean correct logits?
 
-This file is the frozen protocol. The official candidate trials are a later commit. They are not rerun to change this protocol.
+The protocol sections below were frozen before the official trial. The measured result is a later section. The trial is not rerun to change the protocol.
 
 ## Reused material
 
@@ -88,4 +88,99 @@ python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2
 
 The first command refuses a nonempty directory and refuses the archived v1 directory.
 
-The first launch, preserved as `experiments/proxy_direction_v2_harness_failure`, exited 1 before any candidate slot. The proposer raised `KeyError: 'shapes'` because the public config omitted the matrix shapes. Confirmation was not opened and no bundle was written. The shapes are the v1 matrices, `W` included as `[4, 16]`. That omission is a harness defect, not a direction result. The protocol commit was not amended. The official candidate trial is a later run in `experiments/proxy_direction_v2`.
+The first launch, preserved as `experiments/proxy_direction_v2_harness_failure`, exited 1 before any candidate slot. The proposer raised `KeyError: 'shapes'` because the public config omitted the matrix shapes. Confirmation was not opened and no bundle was written. The shapes are the v1 matrices, `W` included as `[4, 16]`. That omission is a harness defect, not a direction result. The protocol commit was not amended. The official candidate trial is `experiments/proxy_direction_v2`.
+
+## Measured result
+
+Protocol commit `f82334f8dd3ca962d0532d74211ab3860ceda469` predates the trial. Commit `7c66e8cda391de1084c86985c207ac0ad89d2782` added the omitted shapes and preserved the harness failure. The official runner then exited 0. `verify_direction` printed:
+
+```
+status=verified study_status=complete wall_seconds=0.7181493999669328 comparison=NEITHER_METHOD_CONFIRMED
+```
+
+The run used 0.7181493999669328 seconds of the 60-second ceiling. `exceeded` is false. Sixteen slots were applied and zero slots were rejected, plus the shared no-edit control. `value_exact_reconstruction` is true. On this Windows runtime all sixteen current resave flags are true. Python 3.12.10 and NumPy 2.5.4.
+
+### Directions
+
+`mean_logit_difference` has direction SHA-256 `c760c2cc907e2fdde44eed24faca8f698ac4bdc75d90c65f94175acc09c2df03`, the same identity as the v1 practice direction. Ranked columns are `[13, 4]`. The selected-support diagnostic is `0.06240743190157001`.
+
+`loss_sensitive_projection` passed the eigenvalue gate. The largest eigenvalue is `0.052331545871127066`, the second is `-0.009201665831084175`, and the gap is `0.06153321170221124`. `tau` is `1e-12`. The Frobenius norm of `M` is `0.2396278921008862`. Direction SHA-256 is `5c18c0525562990638d9730acc265e52cd08fc67b91884798f535d3a281d4410`. Ranked columns are `[4, 10]`. The full-matrix derivative is `-0.052331545871127094`. The selected-support diagnostic is `0.02018349511452412`.
+
+Both diagnostics have `diagnostic_affects_selection` false. The negative full-matrix derivative is the first-order change for an unrestricted projection. The positive selected-support values are the first-order change after the edit is restricted to the two ranked columns. Those diagnostics did not create another direction or another candidate.
+
+### Practice
+
+The damaged practice baseline is 118 correct of 128 targets.
+
+`loss_sensitive_projection` applied every dose and qualified none:
+
+| Dose | Corrections | Losses | Preservation flips | Candidate correct |
+| --- | ---: | ---: | ---: | ---: |
+| 0.005 | 0 | 0 | 0 | 118 |
+| 0.01 | 0 | 0 | 0 | 118 |
+| 0.02 | 0 | 1 | 1 | 117 |
+| 0.04 | 0 | 1 | 1 | 117 |
+| 0.08 | 0 | 2 | 1 | 116 |
+| 0.12 | 0 | 4 | 3 | 114 |
+| 0.16 | 0 | 4 | 3 | 114 |
+| 0.20 | 0 | 5 | 3 | 113 |
+
+Its finalist status is `NO_QUALIFIED_CANDIDATE`.
+
+`mean_logit_difference` applied every dose. One slot qualified:
+
+| Dose | Corrections | Losses | Preservation flips | Eligible | Candidate correct |
+| --- | ---: | ---: | ---: | --- | ---: |
+| 0.005 | 0 | 0 | 0 | false | 118 |
+| 0.01 | 0 | 0 | 0 | false | 118 |
+| 0.02 | 1 | 0 | 0 | true | 119 |
+| 0.04 | 1 | 1 | 1 | false | 118 |
+| 0.08 | 1 | 3 | 5 | false | 116 |
+| 0.12 | 1 | 8 | 11 | false | 111 |
+| 0.16 | 1 | 14 | 17 | false | 105 |
+| 0.20 | 1 | 18 | 20 | false | 101 |
+
+The finalist is `mean_logit_difference-02.wcbundle`, dose index 2, columns `[13, 4]`, strength `0.0960031127352528`, stored update Frobenius norm `0.14652793881663081`. Bundle SHA-256 `b103897223d276f9d1084a954fc83fe1d2002803c779699d148929afb9b52447`. Candidate content SHA-256 `7b19e3b74f796feaf972dbb68904593a8696464c898534bbc764fcd8731ef62f`.
+
+### Confirmation
+
+Seed `1112` drew the bank before either finalist was scored. Bank SHA-256 `05a62b0c7b813b152e4513574462de846dec5c85990af1ee7c79c9a255a7277d`. Lock SHA-256 `9ac583e37e2c3a76fddf0625844b76967108238d4596a5ca1614f8d0c7469c33`. `confirmation_opened` is true and `used_for_selection` is false.
+
+The loss-sensitive confirmation record is `NO_QUALIFIED_CANDIDATE` because that method had no locked finalist.
+
+On 256 confirmation targets the mean-logit finalist moved 246 correct answers to 245. Corrections are 0 and losses are 1. Preservation flips are 2, both correct-to-incorrect regressions. Preservation corrections and incorrect-to-incorrect changes are 0. `behavioral_repair` is false. The no-edit control stayed at 246 correct targets and 0 preservation flips.
+
+The comparison is `NEITHER_METHOD_CONFIRMED`.
+
+The intact teacher and the original fault were already disclosed. This is confirmation on fresh inputs for that known damaged model. The proposer subprocess receives the practice export, public config, damaged source, candidates directory, and deadline. The confirmation bank is not an argument. That process boundary is not a filesystem sandbox.
+
+The strength-one fault deleted a component. Exact restoration of the intact weights is outside the claim. The comparison tests behavioral compensation under the frozen two-column budget.
+
+### Completion checks
+
+```
+python -m pytest tests -q --tb=line
+python -m weightcrack.evaluation.verify_proxy experiments/proxy_fault_v1
+python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2
+```
+
+`pytest` reported 34 passed and 1 warning in 3.09 seconds. The warning is the existing `PytestReturnNotNoneWarning` from `tests/test_phase3.py::test_suite_pins_and_scoring`. The v1 archive check printed `status=verified`, `study_status=complete`, and wall time `0.9394292000215501`. Its saved `behavioral_repair` value remains false. The pre-edit manifest of the four archived experiment directories still matches all 76 files, with 0 missing and 0 changed.
+
+### Reproduce
+
+`experiments/proxy_direction_v2` is nonempty, so the runner refuses that path. A fresh destination is:
+
+```
+python -m weightcrack.evaluation.direction_experiment experiments/proxy_direction_v2_replay
+python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2_replay
+```
+
+The official artifacts are verified with:
+
+```
+python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2
+```
+
+### Separate claims
+
+The verifier repairs, the shapes fix, the tests, and this replay are engineering completion. The scientific outcome on this synthetic model is `NEITHER_METHOD_CONFIRMED`. No real language-model checkpoint was loaded. `docs/REAL_MATRIX_STATUS.md` remains the blocker for that work.

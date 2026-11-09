@@ -44,14 +44,13 @@ The first command refuses to overwrite an existing directory. The study is `f(x)
 
 Bundle verification reconstructs through the same application gate as a normal edit. A fresh resave boolean is recorded separately from the historical one. `docs/VERIFIER_REPAIR.md` has the commands and the current-machine observation.
 
-The next frozen study compares two practice directions on the same damaged model:
+The direction comparison on the same damaged model is recorded in `docs/PROXY_DIRECTION_V2.md`. Its comparison is `NEITHER_METHOD_CONFIRMED`. The loss-sensitive arm had no practice-qualified candidate. The mean-logit arm qualified on practice and, on the fresh confirmation bank, made zero target corrections, one loss, and two preservation regressions. `behavioral_repair` is false. The study keeps the v1 constants and has no random arm.
 
 ```
-python -m weightcrack.evaluation.direction_experiment experiments/proxy_direction_v2
 python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2
 ```
 
-Its protocol is `docs/PROXY_DIRECTION_V2.md`. It does not replace the v1 constants or add a random arm.
+A second run needs an empty directory, for example `experiments/proxy_direction_v2_replay`. The official directory refuses an overwrite.
 
 On this machine the study finished in 0.9394292000215501 seconds. The absolute-projection heuristic did not meet the held-out repair rule. The random control had no practice-qualified candidate. That is the result.
 

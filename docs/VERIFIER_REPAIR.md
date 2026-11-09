@@ -40,3 +40,5 @@ python=3.12.10 numpy=2.5.4
 On this Windows runtime the sixteen fresh flags happen to match the historical flags. That match is not the acceptance condition. `value_exact_reconstruction` is true, and the saved behavioral repair flag remains false.
 
 The pre-edit hash manifest of the four archived experiment directories still matches all 76 files.
+
+After the direction study, the same archive command printed the same verified line and the same wall time. A later `pytest` run reported 34 passed and the same phase-3 warning in 3.09 seconds. The 76-file manifest still had 0 missing and 0 changed files. The archived report's `behavioral_repair` value remains false.

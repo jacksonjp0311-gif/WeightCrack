@@ -1,0 +1,146 @@
+{
+  "accounting": {
+    "changed_coordinates": 8,
+    "columns": [
+      13,
+      4
+    ],
+    "fraction_denominator": 64,
+    "fraction_denominator_definition": "edited_tensor_scalar_count",
+    "max_abs_stored_delta": 0.08100330829620361,
+    "operation_count": 1,
+    "stored_update_frobenius": 0.14652793881663081,
+    "strength": 0.0960031127352528,
+    "touched_coordinates": 8,
+    "touched_fraction": 0.125
+  },
+  "base_sha256": "0f264954eccef5288d489cbfba305a80a0f8635d476e30b0739d35e338c59e5e",
+  "behavioral_qualification": null,
+  "candidate_content_sha256": "7b19e3b74f796feaf972dbb68904593a8696464c898534bbc764fcd8731ef62f",
+  "candidate_file_sha256": "b103897223d276f9d1084a954fc83fe1d2002803c779699d148929afb9b52447",
+  "candidate_manifest": {
+    "content_sha256": "7b19e3b74f796feaf972dbb68904593a8696464c898534bbc764fcd8731ef62f",
+    "dtype": "float32",
+    "name": "W",
+    "nbytes": 256,
+    "shape": [
+      4,
+      16
+    ]
+  },
+  "candidate_nbytes": 1806,
+  "disposition": "applied",
+  "normalized_patch": {
+    "columns": [
+      13,
+      4
+    ],
+    "direction_f64_hex": "c91f0e6dbda9d53f545beaec9bd7e53f42f053f44b68b83fd1f242893b80e4bf",
+    "op": "project_remove",
+    "rounding": "cast_once_after_working_precision",
+    "storage_dtype": "float32",
+    "strength": 0.0960031127352528,
+    "strength_above_one": "reverses the projected component",
+    "strength_f64_hex": "c41983f5a893b83f",
+    "strength_range": "(0, 2]",
+    "tensor": "W",
+    "working_dtype": "float64"
+  },
+  "normalized_patch_sha256": "4505eb44737ddf7edec3a47ba18832f4d8e86453019137077a7b59a1f5663b48",
+  "patch": {
+    "base_sha256": "0f264954eccef5288d489cbfba305a80a0f8635d476e30b0739d35e338c59e5e",
+    "changes": [
+      {
+        "direction": [
+          0.3384851040832442,
+          0.6825694682364465,
+          0.09534144129787683,
+          -0.6406533890618339
+        ],
+        "index": [
+          13,
+          4
+        ],
+        "op": "project_remove",
+        "rank": null,
+        "strength": 0.0960031127352528,
+        "tensor": "W",
+        "value": null
+      }
+    ],
+    "evidence_ids": [
+      "proxy_direction_v2"
+    ],
+    "reason": "practice column projection edit",
+    "schema_id": "weightcrack.patch.v1",
+    "sector": "synthetic_classifier"
+  },
+  "patch_sha256": "0ff764e5f7ba854f8d06904f5d0c9239ba9d7bf557c79ab11ca48f0b07a5c9e2",
+  "policy": {
+    "allow_tensors": [
+      "W"
+    ],
+    "allowed_ops": [
+      "project_remove"
+    ],
+    "max_abs_delta": 2.0,
+    "max_entries": 8,
+    "max_fraction": 0.125,
+    "max_rank": 8,
+    "schema_id": "weightcrack.policy.v1"
+  },
+  "policy_sha256": "e0c502c0a37449677fa5991db1b9e1a7f78b0ad3427554420ac3d17e3640bfca",
+  "precision": {
+    "rounding": "cast_once_after_working_precision",
+    "storage_dtype": "float32",
+    "strength_above_one": "reverses the projected component",
+    "strength_range": "(0, 2]",
+    "working_dtype": "float64"
+  },
+  "reason": "practice column projection edit",
+  "schema": "weightcrack.receipt.v2",
+  "sector": "synthetic_classifier",
+  "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+  "source_manifest": {
+    "content_sha256": "0f264954eccef5288d489cbfba305a80a0f8635d476e30b0739d35e338c59e5e",
+    "dtype": "float32",
+    "name": "W",
+    "nbytes": 256,
+    "shape": [
+      4,
+      16
+    ]
+  },
+  "status": "applied",
+  "task_id": "mean_logit_difference-02",
+  "untouched_tensor_manifests": [
+    {
+      "content_sha256": "50a32ed7c5e67a0c2a16a94cb1d131c72013f369d647f5e99baed02b8fc3a9a2",
+      "dtype": "float32",
+      "name": "A",
+      "nbytes": 512,
+      "shape": [
+        16,
+        8
+      ]
+    },
+    {
+      "content_sha256": "5100a0aa756321624e38dd308ea2d5ebab13c5de6a9247ccc355895aa3018bd8",
+      "dtype": "float32",
+      "name": "b",
+      "nbytes": 64,
+      "shape": [
+        16
+      ]
+    },
+    {
+      "content_sha256": "3ffc9c08b70c9ade15e3abf81807bb3ce2204a851447780d19cf825e693b1d13",
+      "dtype": "float32",
+      "name": "c",
+      "nbytes": 16,
+      "shape": [
+        4
+      ]
+    }
+  ]
+}

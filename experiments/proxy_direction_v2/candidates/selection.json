@@ -1,0 +1,1057 @@
+{
+  "finalists": {
+    "loss_sensitive_projection": {
+      "status": "NO_QUALIFIED_CANDIDATE"
+    },
+    "mean_logit_difference": {
+      "accounting": {
+        "changed_coordinates": 8,
+        "columns": [
+          13,
+          4
+        ],
+        "fraction_denominator": 64,
+        "fraction_denominator_definition": "edited_tensor_scalar_count",
+        "max_abs_stored_delta": 0.08100330829620361,
+        "operation_count": 1,
+        "stored_update_frobenius": 0.14652793881663081,
+        "strength": 0.0960031127352528,
+        "touched_coordinates": 8,
+        "touched_fraction": 0.125
+      },
+      "bundle_name": "mean_logit_difference-02.wcbundle",
+      "candidate_content_sha256": "7b19e3b74f796feaf972dbb68904593a8696464c898534bbc764fcd8731ef62f",
+      "candidate_file_sha256": "b103897223d276f9d1084a954fc83fe1d2002803c779699d148929afb9b52447",
+      "dose_index": 2,
+      "practice": {
+        "baseline_correct": 118,
+        "candidate_correct": 119,
+        "corrections": 1,
+        "count": 128,
+        "eligible": true,
+        "losses": 0,
+        "preservation_count": 128,
+        "preservation_flips": 0,
+        "preserve_prediction_sha256": "215273a5432868881042d5ea93ad84123e96b41b46e205d062fd21cc03cd2e77",
+        "target_prediction_sha256": "039f6e7fd4b442f88031678772838cf4a6873ecccfbbcfef7374d84ddc6f9617"
+      },
+      "status": "qualified",
+      "stored_update_frobenius": 0.14652793881663081,
+      "strength": 0.0960031127352528
+    }
+  },
+  "methods": {
+    "loss_sensitive_projection": {
+      "column_scores": [
+        1.7961344391166585,
+        1.6593839666810635
+      ],
+      "columns": [
+        4,
+        10
+      ],
+      "count": 128,
+      "definition": "leading eigenvector of (G @ W.T + W @ G.T) / 2",
+      "diagnostic_affects_selection": false,
+      "direction_f64_hex": "1918ddad3e26e13fae35c9544338dcbf12d9f98b7c81dc3f5ae3877efb19e23f",
+      "direction_sha256": "5c18c0525562990638d9730acc265e52cd08fc67b91884798f535d3a281d4410",
+      "eigen_gap": 0.06153321170221124,
+      "eigenvalues_f64_hex": "35ed96e6fffdcbbfeaff72d1a811b5bf427d81ae52d882bf3c98214c33cbaa3f",
+      "frobenius_norm_M": 0.2396278921008862,
+      "full_matrix_derivative": -0.052331545871127094,
+      "full_matrix_derivative_f64_hex": "4098214c33cbaabf",
+      "largest_eigenvalue": 0.052331545871127066,
+      "norm": 1.0,
+      "second_eigenvalue": -0.009201665831084175,
+      "selected_support_derivative": 0.02018349511452412,
+      "selected_support_derivative_f64_hex": "4351be6dfbaa943f",
+      "slots": [
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.015220403671264648,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.03663198687991889,
+            "strength": 0.014980352756995623,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-00.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.015220403671264648,
+            "relative_error": 8.460929290955908e-08,
+            "stored_norm": 0.03663198687991889,
+            "stored_norm_initial": 0.03663201480133328,
+            "strength": 0.014980352756995623,
+            "strength_initial": 0.014980365442708705,
+            "target_norm": 0.03663198378051265
+          },
+          "candidate_content_sha256": "8c0caacf8427cce8f932bd18effe365bbb52bb2286bf411a0999e32623882fd4",
+          "candidate_file_sha256": "e38177f0e27bf2411d627e1a4ca7345af502a8787e6e6599257aa936bd9f2acb",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.005,
+          "dose_index": 0,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 118,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 0,
+            "preservation_count": 128,
+            "preservation_flips": 0,
+            "preserve_prediction_sha256": "215273a5432868881042d5ea93ad84123e96b41b46e205d062fd21cc03cd2e77",
+            "target_prediction_sha256": "2e5aeea301d2559e4f9136620dfa1ce2e67380697a42f32deb4c185f679b9031"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.03663198687991889,
+          "strength": 0.014980352756995623,
+          "target_norm": 0.03663198378051265,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.030440807342529297,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.07326396278699748,
+            "strength": 0.029960732837719155,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-01.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.030440807342529297,
+            "relative_error": 6.51620158024283e-08,
+            "stored_norm": 0.07326396278699748,
+            "stored_norm_initial": 0.07326396278699748,
+            "strength": 0.029960732837719155,
+            "strength_initial": 0.02996073088541741,
+            "target_norm": 0.0732639675610253
+          },
+          "candidate_content_sha256": "542ca228eabb303a23f555e77d70d1ff6a32e6c1533be88d7749aa032ecee7f8",
+          "candidate_file_sha256": "90aeb7378ad726098444cf8a4a76367c7e008b743e7d6bdabb9642cb2aa5a833",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.01,
+          "dose_index": 1,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 118,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 0,
+            "preservation_count": 128,
+            "preservation_flips": 0,
+            "preserve_prediction_sha256": "215273a5432868881042d5ea93ad84123e96b41b46e205d062fd21cc03cd2e77",
+            "target_prediction_sha256": "2e5aeea301d2559e4f9136620dfa1ce2e67380697a42f32deb4c185f679b9031"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.07326396278699748,
+          "strength": 0.029960732837719155,
+          "target_norm": 0.0732639675610253,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.06088149547576904,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.14652792904818068,
+            "strength": 0.059921464254696875,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-02.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.06088149547576904,
+            "relative_error": 4.145195864509652e-08,
+            "stored_norm": 0.14652792904818068,
+            "stored_norm_initial": 0.14652792904818068,
+            "strength": 0.059921464254696875,
+            "strength_initial": 0.05992146177083482,
+            "target_norm": 0.1465279351220506
+          },
+          "candidate_content_sha256": "92fb9682cf41527f957b084bf9ae1eaa1499a23fcc961677ca72ea573ef9049d",
+          "candidate_file_sha256": "7584ff6d9317f88bc6a4c2d3342633193ed5804ad9c0ca69afe8aad7a60f45e2",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.02,
+          "dose_index": 2,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 117,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 1,
+            "preservation_count": 128,
+            "preservation_flips": 1,
+            "preserve_prediction_sha256": "6b98689a86210da3e22f354bfdae30d03c13cf8be0ef69c949b349d6bb42949e",
+            "target_prediction_sha256": "5efdf6d463d384697d7f276d06976258d614ea142642aa932c24439dbdf2aae3"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.14652792904818068,
+          "strength": 0.059921464254696875,
+          "target_norm": 0.1465279351220506,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.12176311016082764,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.2930558494929155,
+            "strength": 0.11984291429889177,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-03.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.12176311016082764,
+            "relative_error": 7.080965701663453e-08,
+            "stored_norm": 0.2930558494929155,
+            "stored_norm_initial": 0.29305589284577377,
+            "strength": 0.11984291429889177,
+            "strength_initial": 0.11984292354166964,
+            "target_norm": 0.2930558702441012
+          },
+          "candidate_content_sha256": "a124caaad18200ba23123349bdf4c303dbaa566b518f1d749590ea895378937e",
+          "candidate_file_sha256": "86aba77b58484284ff83b9f3c362f757c52840091a5f293fe8b554ea9529e94a",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.04,
+          "dose_index": 3,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 117,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 1,
+            "preservation_count": 128,
+            "preservation_flips": 1,
+            "preserve_prediction_sha256": "6b98689a86210da3e22f354bfdae30d03c13cf8be0ef69c949b349d6bb42949e",
+            "target_prediction_sha256": "5efdf6d463d384697d7f276d06976258d614ea142642aa932c24439dbdf2aae3"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.2930558494929155,
+          "strength": 0.11984291429889177,
+          "target_norm": 0.2930558702441012,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.24352622032165527,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.5861117313727697,
+            "strength": 0.23968584236690743,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-04.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.24352622032165527,
+            "relative_error": 1.5552380205423547e-08,
+            "stored_norm": 0.5861117313727697,
+            "stored_norm_initial": 0.5861117520214496,
+            "strength": 0.23968584236690743,
+            "strength_initial": 0.2396858470833393,
+            "target_norm": 0.5861117404882024
+          },
+          "candidate_content_sha256": "0d46d86d84abc7eb447cdd374195be72dff8f9b1eec6dacb00a1e58a1b0eeaa1",
+          "candidate_file_sha256": "5c241054c5c756ef66767b5b0cbcfb28ba0186bb43b1c1b306ef03a52997da40",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.08,
+          "dose_index": 4,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 116,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 2,
+            "preservation_count": 128,
+            "preservation_flips": 1,
+            "preserve_prediction_sha256": "6b98689a86210da3e22f354bfdae30d03c13cf8be0ef69c949b349d6bb42949e",
+            "target_prediction_sha256": "6c03cc8c3c0e6eb94443a4f1df7ae1fc6de81f647d14063e345ff828ce745beb"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.5861117313727697,
+          "strength": 0.23968584236690743,
+          "target_norm": 0.5861117404882024,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.36528921127319336,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.8791675834419141,
+            "strength": 0.3595287585421223,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-05.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.36528921127319336,
+            "relative_error": 3.1041167872439995e-08,
+            "stored_norm": 0.8791675834419141,
+            "stored_norm_initial": 0.8791676402789874,
+            "strength": 0.3595287585421223,
+            "strength_initial": 0.35952877062500893,
+            "target_norm": 0.8791676107323035
+          },
+          "candidate_content_sha256": "c61685c4071938474f2c334d898c9372c9403b843cfb8c5d6ef89a66e73372f8",
+          "candidate_file_sha256": "cc1426b7d42e3b3d295fb9173fefd1229bbe06f81758b116ba2ac13b16d33c6a",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.12,
+          "dose_index": 5,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 114,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 4,
+            "preservation_count": 128,
+            "preservation_flips": 3,
+            "preserve_prediction_sha256": "2c28200218c9ecef04de3c482abe6e8cdb857fd808c3ee051fe8b8d26092a954",
+            "target_prediction_sha256": "f50c89438b482048d79d03f3cd987c69a099672fb8c64daa682642f6d6177020"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.8791675834419141,
+          "strength": 0.3595287585421223,
+          "target_norm": 0.8791676107323035,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.48705244064331055,
+            "operation_count": 1,
+            "stored_update_frobenius": 1.1722235193059465,
+            "strength": 0.4793717054588023,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-06.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.48705244064331055,
+            "relative_error": 3.26981521738694e-08,
+            "stored_norm": 1.1722235193059465,
+            "stored_norm_initial": 1.1722234533634013,
+            "strength": 0.4793717054588023,
+            "strength_initial": 0.4793716941666786,
+            "target_norm": 1.1722234809764047
+          },
+          "candidate_content_sha256": "e8247639da95e034039f88bd1d431f791a24280d2fdb91d9c550e41c245fb100",
+          "candidate_file_sha256": "a7177922852ebc75e8c474e1c91681a2fa15615716721a3eafddcf9021efbd51",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.16,
+          "dose_index": 6,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 114,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 4,
+            "preservation_count": 128,
+            "preservation_flips": 3,
+            "preserve_prediction_sha256": "2c28200218c9ecef04de3c482abe6e8cdb857fd808c3ee051fe8b8d26092a954",
+            "target_prediction_sha256": "fd709f5e2c7604cfac4a6ff78642be2481c94132ba1e5f59b264e61670d1354b"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 1.1722235193059465,
+          "strength": 0.4793717054588023,
+          "target_norm": 1.1722234809764047,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              4,
+              10
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.6088154315948486,
+            "operation_count": 1,
+            "stored_update_frobenius": 1.4652793423248742,
+            "strength": 0.5992146064806627,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "loss_sensitive_projection-07.wcbundle",
+          "calibration": {
+            "geometry": 2.4453331209181077,
+            "max_abs_stored_delta": 0.6088154315948486,
+            "relative_error": 6.070945979913776e-09,
+            "stored_norm": 1.4652793423248742,
+            "stored_norm_initial": 1.4652793786759377,
+            "strength": 0.5992146064806627,
+            "strength_initial": 0.5992146177083483,
+            "target_norm": 1.465279351220506
+          },
+          "candidate_content_sha256": "3f9b8c35e37c9a82646ea84eb4ea16377a7b2b6146193bea7e4d7195b0a4313d",
+          "candidate_file_sha256": "b3693277cad46dafe6ac8359f14f32fbd933a09d81cd3a80942a1c3c5b0f8a63",
+          "columns": [
+            4,
+            10
+          ],
+          "disposition": "applied",
+          "dose": 0.2,
+          "dose_index": 7,
+          "method": "loss_sensitive_projection",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 113,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 5,
+            "preservation_count": 128,
+            "preservation_flips": 3,
+            "preserve_prediction_sha256": "2c28200218c9ecef04de3c482abe6e8cdb857fd808c3ee051fe8b8d26092a954",
+            "target_prediction_sha256": "eb40a87c96346418fbcc2c4f745c3f7a355538806a33571ff32ede2f522d1fbc"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 1.4652793423248742,
+          "strength": 0.5992146064806627,
+          "target_norm": 1.465279351220506,
+          "trial_application_equivalent": true
+        }
+      ],
+      "status": "ok",
+      "tau": 1e-12,
+      "tau_f64_hex": "11ea2d819997713d"
+    },
+    "mean_logit_difference": {
+      "column_scores": [
+        1.2361474464497528,
+        0.8952538403927447
+      ],
+      "columns": [
+        13,
+        4
+      ],
+      "definition": "normalized mean damaged post_linear_logits on incorrect practice targets minus the mean on correct practice targets",
+      "diagnostic_affects_selection": false,
+      "direction_f64_hex": "c91f0e6dbda9d53f545beaec9bd7e53f42f053f44b68b83fd1f242893b80e4bf",
+      "direction_sha256": "c760c2cc907e2fdde44eed24faca8f698ac4bdc75d90c65f94175acc09c2df03",
+      "norm": 0.9999999999999999,
+      "selected_support_derivative": 0.06240743190157001,
+      "selected_support_derivative_f64_hex": "8ad416eeddf3af3f",
+      "slots": [
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.020250797271728516,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.036631978653063,
+            "strength": 0.024000788275228772,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "mean_logit_difference-00.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.020250797271728516,
+            "relative_error": 1.3997193480286878e-07,
+            "stored_norm": 0.036631978653063,
+            "stored_norm_initial": 0.0366319712347454,
+            "strength": 0.024000788275228772,
+            "strength_initial": 0.024000780055409034,
+            "target_norm": 0.03663198378051265
+          },
+          "candidate_content_sha256": "3755b09c9b72e535b2c08ce091732500a6e691f4a4bc487d48141cdf79b4c5d8",
+          "candidate_file_sha256": "abf9718fbb62b65bc1c13bd1851d85de8cc0ab30e8fb8eab402fb33242166ee2",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.005,
+          "dose_index": 0,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 118,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 0,
+            "preservation_count": 128,
+            "preservation_flips": 0,
+            "preserve_prediction_sha256": "215273a5432868881042d5ea93ad84123e96b41b46e205d062fd21cc03cd2e77",
+            "target_prediction_sha256": "2e5aeea301d2559e4f9136620dfa1ce2e67380697a42f32deb4c185f679b9031"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.036631978653063,
+          "strength": 0.024000788275228772,
+          "target_norm": 0.03663198378051265,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.04050159454345703,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.07326395627407745,
+            "strength": 0.04800158299028918,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "mean_logit_difference-01.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.04050159454345703,
+            "relative_error": 1.5405864880543318e-07,
+            "stored_norm": 0.07326395627407745,
+            "stored_norm_initial": 0.073263932640493,
+            "strength": 0.04800158299028918,
+            "strength_initial": 0.04800156011081807,
+            "target_norm": 0.0732639675610253
+          },
+          "candidate_content_sha256": "5ed63778d7235d149fd92d4c686b50a2fc64c0ef98bdc54e8cd8992e3beb5ffa",
+          "candidate_file_sha256": "c2f3a7c40023df515c947e775443fb2847b0a679e49adef53cabc2978822a9d6",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.01,
+          "dose_index": 1,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 118,
+            "corrections": 0,
+            "count": 128,
+            "eligible": false,
+            "losses": 0,
+            "preservation_count": 128,
+            "preservation_flips": 0,
+            "preserve_prediction_sha256": "215273a5432868881042d5ea93ad84123e96b41b46e205d062fd21cc03cd2e77",
+            "target_prediction_sha256": "2e5aeea301d2559e4f9136620dfa1ce2e67380697a42f32deb4c185f679b9031"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.07326395627407745,
+          "strength": 0.04800158299028918,
+          "target_norm": 0.0732639675610253,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.08100330829620361,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.14652793881663081,
+            "strength": 0.0960031127352528,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": true,
+          "bundle_name": "mean_logit_difference-02.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.08100330829620361,
+            "relative_error": 2.5214169721366263e-08,
+            "stored_norm": 0.14652793881663081,
+            "stored_norm_initial": 0.14652794654839146,
+            "strength": 0.0960031127352528,
+            "strength_initial": 0.09600312022163614,
+            "target_norm": 0.1465279351220506
+          },
+          "candidate_content_sha256": "7b19e3b74f796feaf972dbb68904593a8696464c898534bbc764fcd8731ef62f",
+          "candidate_file_sha256": "b103897223d276f9d1084a954fc83fe1d2002803c779699d148929afb9b52447",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.02,
+          "dose_index": 2,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 119,
+            "corrections": 1,
+            "count": 128,
+            "eligible": true,
+            "losses": 0,
+            "preservation_count": 128,
+            "preservation_flips": 0,
+            "preserve_prediction_sha256": "215273a5432868881042d5ea93ad84123e96b41b46e205d062fd21cc03cd2e77",
+            "target_prediction_sha256": "039f6e7fd4b442f88031678772838cf4a6873ecccfbbcfef7374d84ddc6f9617"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.14652793881663081,
+          "strength": 0.0960031127352528,
+          "target_norm": 0.1465279351220506,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.16200649738311768,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.2930558725276906,
+            "strength": 0.1920062389470954,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "mean_logit_difference-03.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.16200649738311768,
+            "relative_error": 7.792334706560352e-09,
+            "stored_norm": 0.2930558725276906,
+            "stored_norm_initial": 0.2930558725276906,
+            "strength": 0.1920062389470954,
+            "strength_initial": 0.19200624044327227,
+            "target_norm": 0.2930558702441012
+          },
+          "candidate_content_sha256": "06d588da31855a2778a2fab3487ea2d756ceb5620783f5121ec242150a320435",
+          "candidate_file_sha256": "6da0343aa48c124b105349c80e24ba8d365116a8522b17ab72d0e4cc3f239408",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.04,
+          "dose_index": 3,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 118,
+            "corrections": 1,
+            "count": 128,
+            "eligible": false,
+            "losses": 1,
+            "preservation_count": 128,
+            "preservation_flips": 1,
+            "preserve_prediction_sha256": "3726a59a1d329f7c3751d9668319f28735deeb66d892a434307442b52e671a05",
+            "target_prediction_sha256": "a264ceb331d7603bf1ffe346aa909209d188c22d5f3fb1e348931573310587c9"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.2930558725276906,
+          "strength": 0.1920062389470954,
+          "target_norm": 0.2930558702441012,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.32401299476623535,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.5861117431537949,
+            "strength": 0.3840124785068662,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "mean_logit_difference-04.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.32401299476623535,
+            "relative_error": 4.547925489884264e-09,
+            "stored_norm": 0.5861117431537949,
+            "stored_norm_initial": 0.5861117441202651,
+            "strength": 0.3840124785068662,
+            "strength_initial": 0.38401248088654455,
+            "target_norm": 0.5861117404882024
+          },
+          "candidate_content_sha256": "18f2b510394aef367676cc824cb38b1e3bb3506a461c23ba8bb896ecb6c09c90",
+          "candidate_file_sha256": "87ff97fa92b107ce84aa43f052f66617f8b7313ad728a6c0a4b529835171344e",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.08,
+          "dose_index": 4,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 116,
+            "corrections": 1,
+            "count": 128,
+            "eligible": false,
+            "losses": 3,
+            "preservation_count": 128,
+            "preservation_flips": 5,
+            "preserve_prediction_sha256": "9a73c834363dfa7bab26173412128abf1dace0dc2abd74dc5df5fcc324e6935a",
+            "target_prediction_sha256": "57957a0912f8a7ae1d4308b4d2ecbd514bfe97ad615a167f7f7ba51704984495"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.5861117431537949,
+          "strength": 0.3840124785068662,
+          "target_norm": 0.5861117404882024,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.4860196113586426,
+            "operation_count": 1,
+            "stored_update_frobenius": 0.8791676548327851,
+            "strength": 0.5760187499406878,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "mean_logit_difference-05.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.4860196113586426,
+            "relative_error": 5.016163136757156e-08,
+            "stored_norm": 0.8791676548327851,
+            "stored_norm_initial": 0.8791675670640181,
+            "strength": 0.5760187499406878,
+            "strength_initial": 0.5760187213298168,
+            "target_norm": 0.8791676107323035
+          },
+          "candidate_content_sha256": "17d665b5e67b835b61506e9291cbde93940d37f69cefd56f260da630151eb0a8",
+          "candidate_file_sha256": "24b73423cd3759d0cbcbd9a535eeb35efbb32caee0ad08e01be9be7868e51f30",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.12,
+          "dose_index": 5,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 111,
+            "corrections": 1,
+            "count": 128,
+            "eligible": false,
+            "losses": 8,
+            "preservation_count": 128,
+            "preservation_flips": 11,
+            "preserve_prediction_sha256": "8ca258d1528dcb3f7699364a1ff916927776e01702f06b023b7826771fbbe08f",
+            "target_prediction_sha256": "a31630977df1093a5df9d31b84a3fd028bd223e32aac7aa3c5677d7c039e5135"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 0.8791676548327851,
+          "strength": 0.5760187499406878,
+          "target_norm": 0.8791676107323035,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.6480260491371155,
+            "operation_count": 1,
+            "stored_update_frobenius": 1.1722234809771455,
+            "strength": 0.7680249617726037,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "mean_logit_difference-06.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.6480260491371155,
+            "relative_error": 6.319109061122915e-13,
+            "stored_norm": 1.1722234809771455,
+            "stored_norm_initial": 1.1722234809771455,
+            "strength": 0.7680249617726037,
+            "strength_initial": 0.7680249617730891,
+            "target_norm": 1.1722234809764047
+          },
+          "candidate_content_sha256": "fbdba6b78df57f59e0a88a69224abf4e00ed60673813e7d7876cad24f73f8670",
+          "candidate_file_sha256": "e4999b6fc81ab8d105cad38e5a488c36c9fa4d68495ac158aee1e1947be29b5e",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.16,
+          "dose_index": 6,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 105,
+            "corrections": 1,
+            "count": 128,
+            "eligible": false,
+            "losses": 14,
+            "preservation_count": 128,
+            "preservation_flips": 17,
+            "preserve_prediction_sha256": "997ca26cb31692994313a01a1dfae94f71438448fb6b010a51f985126d05ae93",
+            "target_prediction_sha256": "826be016804f7cef2055f43591e7618ff9e7ab1f3a5110eed2642308ac0b507e"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 1.1722234809771455,
+          "strength": 0.7680249617726037,
+          "target_norm": 1.1722234809764047,
+          "trial_application_equivalent": true
+        },
+        {
+          "accounting": {
+            "changed_coordinates": 8,
+            "columns": [
+              13,
+              4
+            ],
+            "fraction_denominator": 64,
+            "fraction_denominator_definition": "edited_tensor_scalar_count",
+            "max_abs_stored_delta": 0.8100325465202332,
+            "operation_count": 1,
+            "stored_update_frobenius": 1.4652793457730726,
+            "strength": 0.9600312057854461,
+            "touched_coordinates": 8,
+            "touched_fraction": 0.125
+          },
+          "behavioral_qualification": null,
+          "behaviorally_qualified_on_practice": false,
+          "bundle_name": "mean_logit_difference-07.wcbundle",
+          "calibration": {
+            "geometry": 1.5262830497984974,
+            "max_abs_stored_delta": 0.8100325465202332,
+            "relative_error": 3.7176756696394025e-09,
+            "stored_norm": 1.4652793457730726,
+            "stored_norm_initial": 1.4652793457730726,
+            "strength": 0.9600312057854461,
+            "strength_initial": 0.9600312022163614,
+            "target_norm": 1.465279351220506
+          },
+          "candidate_content_sha256": "96b36fa826613fa65547104ca160ffb104ca2257b051e42d08184d30640d2046",
+          "candidate_file_sha256": "c3c40bc2d914f1602360fffe99e5ad033511dd6856889d0fe723a4739f887fb5",
+          "columns": [
+            13,
+            4
+          ],
+          "disposition": "applied",
+          "dose": 0.2,
+          "dose_index": 7,
+          "method": "mean_logit_difference",
+          "practice": {
+            "baseline_correct": 118,
+            "candidate_correct": 101,
+            "corrections": 1,
+            "count": 128,
+            "eligible": false,
+            "losses": 18,
+            "preservation_count": 128,
+            "preservation_flips": 20,
+            "preserve_prediction_sha256": "05866113350224a5868447522e678f5811e9790ee96a697e83dd1aef7c4ff56f",
+            "target_prediction_sha256": "a2b043cdd1addea8657c30c0a98f62b1ef6b731473a74f912e02056f863c556f"
+          },
+          "reason": null,
+          "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728",
+          "status": "applied",
+          "stored_update_frobenius": 1.4652793457730726,
+          "strength": 0.9600312057854461,
+          "target_norm": 1.465279351220506,
+          "trial_application_equivalent": true
+        }
+      ],
+      "status": "ok"
+    }
+  },
+  "no_edit": {
+    "content_sha256": "0f264954eccef5288d489cbfba305a80a0f8635d476e30b0739d35e338c59e5e",
+    "practice_preserve_prediction_sha256": "215273a5432868881042d5ea93ad84123e96b41b46e205d062fd21cc03cd2e77",
+    "practice_target_correct": 118,
+    "practice_target_count": 128,
+    "practice_target_prediction_sha256": "2e5aeea301d2559e4f9136620dfa1ce2e67380697a42f32deb4c185f679b9031",
+    "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728"
+  },
+  "schema": "weightcrack.direction_selection.v1",
+  "source": {
+    "damaged_W_sha256": "0f264954eccef5288d489cbfba305a80a0f8635d476e30b0739d35e338c59e5e",
+    "practice_export_sha256": "43564c2ce9e4a973a517d4eb887bd75c377d72f0785ab4e2692e14cc659d4535",
+    "practice_label_sha256": "1adbd3c1a767e92de34c13d32b33ac1a1be2ef6579dc2eb3c0d0ee81372cda32",
+    "practice_target_sha256": "ee3a77e6dd784a52a9d1c14582a2d3ef9391dbe903292ca660123bdca818c3cb",
+    "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728"
+  },
+  "status": "ok",
+  "study_id": "proxy_direction_v2"
+}

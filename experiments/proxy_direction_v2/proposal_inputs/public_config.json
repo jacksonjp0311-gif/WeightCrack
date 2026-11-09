@@ -1,0 +1,82 @@
+{
+  "activation_site": "post_linear_logits",
+  "comparison_rule": "A method confirms only when its locked finalist meets the confirmation rule. If both confirm, more target corrections decides; an equal count is NO_CONFIRMATION_WINNER. If neither confirms, the result is NEITHER_METHOD_CONFIRMED. This comparison does not create candidates.",
+  "confirmation_generator": "numpy.random.default_rng(1112).standard_normal; target rows, then preservation rows; one cast to float32",
+  "confirmation_rule": "positive confirmation-target corrections, zero losses of previously correct confirmation targets, zero confirmation preservation flips",
+  "confirmation_seed": 1112,
+  "directions": {
+    "loss_sensitive_projection": "unit leading eigenvector of M = (G @ W.T + W @ G.T) / 2, where G is the mean cross-entropy gradient on the practice targets",
+    "mean_logit_difference": "normalized mean damaged post_linear_logits on incorrect practice targets minus the mean on correct practice targets"
+  },
+  "doses": [
+    0.005,
+    0.01,
+    0.02,
+    0.04,
+    0.08,
+    0.12,
+    0.16,
+    0.2
+  ],
+  "eigenvalue_rule": "tau = 1e-12 * max(1, frobenius_norm(M)); largest and gap must exceed tau",
+  "match_tolerance": 0.001,
+  "maximum_candidate_slots": 16,
+  "methods": [
+    "mean_logit_difference",
+    "loss_sensitive_projection"
+  ],
+  "policy": {
+    "allow_tensors": [
+      "W"
+    ],
+    "allowed_ops": [
+      "project_remove"
+    ],
+    "max_abs_delta": 2.0,
+    "max_entries": 8,
+    "max_fraction": 0.125,
+    "max_rank": 8,
+    "schema_id": "weightcrack.policy.v1"
+  },
+  "population": {
+    "confirmation_preserve": 256,
+    "confirmation_target": 256,
+    "practice_preserve": 128,
+    "practice_target": 128
+  },
+  "question": "Does a direction informed by supervised practice loss produce a better compensating edit than the existing difference between mean incorrect and mean correct logits?",
+  "ranking": "absolute projection onto that method's direction; top two columns",
+  "sector": "synthetic_classifier",
+  "selection_rule": "positive practice target corrections, zero practice target losses, zero practice preservation flips; then more corrections, smaller stored update norm, earlier dose index",
+  "shapes": {
+    "A": [
+      16,
+      8
+    ],
+    "W": [
+      4,
+      16
+    ],
+    "b": [
+      16
+    ],
+    "c": [
+      4
+    ],
+    "x": [
+      8
+    ]
+  },
+  "source_practice_identities": {
+    "damaged_W_sha256": "0f264954eccef5288d489cbfba305a80a0f8635d476e30b0739d35e338c59e5e",
+    "intact_W_sha256": "c8da464c0dc7412cc928e10fd61b00f544a7897a65d669b226c6997fcf2bc5a7",
+    "practice_export_sha256": "43564c2ce9e4a973a517d4eb887bd75c377d72f0785ab4e2692e14cc659d4535",
+    "source_file_sha256": "9bb3173af038aa8d58070fd28c3c5c6811e5afe0dbc2ef309dd44c3aebad2728"
+  },
+  "storage_dtype": "float32",
+  "study_id": "proxy_direction_v2",
+  "support_size": 2,
+  "tensor_name": "W",
+  "wall_limit_s": 60.0,
+  "working_dtype": "float64"
+}

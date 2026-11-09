@@ -1,0 +1,5 @@
+{"stage": "frozen", "study_id": "proxy_direction_v2"}
+{"code": 0, "stage": "proposer_returned"}
+{"lock_sha256": "9ac583e37e2c3a76fddf0625844b76967108238d4596a5ca1614f8d0c7469c33", "stage": "lock_written"}
+{"stage": "confirmation_opened"}
+{"stage": "report_written", "status": "complete"}
