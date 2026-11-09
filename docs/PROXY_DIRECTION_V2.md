@@ -86,4 +86,6 @@ python -m weightcrack.evaluation.direction_experiment experiments/proxy_directio
 python -m weightcrack.evaluation.verify_direction experiments/proxy_direction_v2
 ```
 
-The first command refuses a nonempty directory and refuses the archived v1 directory. The official result is not in the protocol commit.
+The first command refuses a nonempty directory and refuses the archived v1 directory.
+
+The first launch, preserved as `experiments/proxy_direction_v2_harness_failure`, exited 1 before any candidate slot. The proposer raised `KeyError: 'shapes'` because the public config omitted the matrix shapes. Confirmation was not opened and no bundle was written. The shapes are the v1 matrices, `W` included as `[4, 16]`. That omission is a harness defect, not a direction result. The protocol commit was not amended. The official candidate trial is a later run in `experiments/proxy_direction_v2`.

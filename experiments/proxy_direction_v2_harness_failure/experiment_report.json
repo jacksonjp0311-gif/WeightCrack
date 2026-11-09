@@ -1,0 +1,24 @@
+{
+  "confirmation_opened": false,
+  "isolation": {
+    "implemented": "The proposer is a subprocess whose arguments are the practice export, public config, damaged source, candidates directory, and a deadline. The confirmation bank is not an argument.",
+    "not_a_blinded_replication": "The intact teacher and the original fault are already disclosed. Confirmation uses fresh inputs for this known damaged model.",
+    "not_a_sandbox": "Process separation is not a hardened filesystem sandbox. A modified proposer could open sibling files, including the confirmation bank."
+  },
+  "proposer_stderr": "proposer_error: 'shapes'\n",
+  "proposer_stdout": "",
+  "question": "Does a direction informed by supervised practice loss produce a better compensating edit than the existing difference between mean incorrect and mean correct logits?",
+  "runtime": {
+    "numpy": "2.5.4",
+    "python": "3.12.10"
+  },
+  "schema": "weightcrack.direction_report.v1",
+  "status": "VERIFICATION_FAILED",
+  "study_id": "proxy_direction_v2",
+  "timing": {
+    "clock": "time.perf_counter",
+    "exceeded": false,
+    "limit_seconds": 60.0,
+    "wall_seconds": 0.43725640000775456
+  }
+}

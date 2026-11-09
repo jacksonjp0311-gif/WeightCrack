@@ -52,6 +52,7 @@ def test_v2_protocol_does_not_redefine_v1():
     assert v2["question"] == QUESTION
     assert v2["doses"] == list(DOSES)
     assert v2["maximum_candidate_slots"] == 16
+    assert v2["shapes"] == {"A": [16, 8], "b": [16], "W": [4, 16], "c": [4], "x": [8]}
 
 
 def test_gradient_and_directional_derivative_match_finite_differences():

@@ -1,0 +1,20 @@
+{
+  "blinded_fault_replication": false,
+  "confirmation_preserve_label_sha256": "08824b6020c1056c9da0db32b3f124853a3a120de234d25227c7fe772d947102",
+  "confirmation_preserve_sha256": "3944f3ac57306e31af15deeadbb42d717b14b5e357001f132ed0c3d862d2a379",
+  "confirmation_seed": 1112,
+  "confirmation_target_label_sha256": "904e5099089f05e4da3e0c24d3e0e9929d07c12f33f9ec521909b14124063ce6",
+  "confirmation_target_sha256": "8b29f9e5525bdb91872ecb22612c2b6d2767c7443bd1ac5ef2c54fc82e414f5c",
+  "damaged_W_sha256": "0f264954eccef5288d489cbfba305a80a0f8635d476e30b0739d35e338c59e5e",
+  "fault_columns": [
+    10,
+    7
+  ],
+  "fault_strength": 1.0,
+  "intact_W_sha256": "c8da464c0dc7412cc928e10fd61b00f544a7897a65d669b226c6997fcf2bc5a7",
+  "known_damaged_model": true,
+  "label_rule": "argmax of the intact teacher on confirmation inputs drawn with seed 1112",
+  "process_boundary": "The proposer subprocess arguments are the practice export, public config, damaged source, candidates directory, and a deadline. The confirmation bank is not an argument. Process separation is not a filesystem sandbox.",
+  "schema": "weightcrack.direction_secret.v1",
+  "source_study": "proxy_fault_v1"
+}

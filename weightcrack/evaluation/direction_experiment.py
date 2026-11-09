@@ -73,6 +73,7 @@ def official_config() -> dict[str, Any]:
         "activation_site": "post_linear_logits",
         "storage_dtype": "float32",
         "working_dtype": "float64",
+        "shapes": {"A": [16, 8], "b": [16], "W": [4, 16], "c": [4], "x": [8]},
         "doses": list(DOSES),
         "match_tolerance": MATCH_TOLERANCE,
         "support_size": SUPPORT_SIZE,
