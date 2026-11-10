@@ -1,0 +1,40 @@
+{
+  "n_seeds": 200,
+  "doses": [
+    0.05,
+    0.1,
+    0.2,
+    0.4,
+    0.8,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "results": {
+    "proj_2": {
+      "success_rate": 1.0,
+      "successes": 200,
+      "trials": 200
+    },
+    "proj_4": {
+      "success_rate": 0.885,
+      "successes": 177,
+      "trials": 200
+    },
+    "proj_8": {
+      "success_rate": 0.755,
+      "successes": 151,
+      "trials": 200
+    },
+    "rank1_2": {
+      "success_rate": 0.475,
+      "successes": 95,
+      "trials": 200
+    },
+    "rank1_4": {
+      "success_rate": 0.495,
+      "successes": 99,
+      "trials": 200
+    }
+  }
+}
