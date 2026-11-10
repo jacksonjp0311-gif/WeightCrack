@@ -132,7 +132,7 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
 
     base_hash = hashlib.sha256(np.ascontiguousarray(W_damaged).tobytes()).hexdigest()
 
-    doses = [0.005, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16, 0.20]
+    doses = [0.05, 0.1, 0.2, 0.4, 0.8, 1.0, 1.5, 2.0]
     W_norm = float(np.linalg.norm(W_damaged))
 
     def score_target(W_cand, x, y):
