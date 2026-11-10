@@ -39,10 +39,17 @@ def run_probe(matrix_path: Path, out_dir: Path, seed: int = 0) -> dict:
     if fail_mask.sum() == 0 or (~fail_mask).sum() == 0:
         return {"status": "NO_LOCALIZATION_SIGNAL"}
 
-    diff = activation_difference(x_prac[fail_mask], x_prac[~fail_mask])
-    direction = np.array(diff["direction"])
-    ranked = rank_columns(W, direction, top_k=2)
-    cols = ranked["columns"]
+    # Static ranking on the top PCA direction of the failure vectors
+    fail_vecs = x_prac[fail_mask]
+    if fail_vecs.shape[0] >= 2:
+        centered = fail_vecs - fail_vecs.mean(axis=0)
+        _, _, vh = np.linalg.svd(centered, full_matrices=False)
+        direction = vh[0]
+    else:
+        direction = fail_vecs.mean(axis=0)
+        direction = direction / (np.linalg.norm(direction) + 1e-12)
+    write = np.abs(W.T @ direction)
+    cols = np.argsort(write)[::-1][:2].tolist()
 
     # One fixed dose
     try:
