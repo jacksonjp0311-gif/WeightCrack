@@ -184,3 +184,26 @@ def practice_direction_search(
                 "status": "ok",
             }
     return best or {"status": "NO_DIRECTION"}
+
+
+def writer_column_score(
+    hidden_fail: np.ndarray,
+    hidden_success: np.ndarray,
+    matrix: np.ndarray,
+    direction: list[float] | np.ndarray,
+    top_k: int = 2,
+) -> dict[str, Any]:
+    """
+    Writer-column score: (mean_h_fail - mean_h_success) * (u^T W[:, j]).
+    The activation contrast times the static write. Practice-only.
+    """
+    u = np.asarray(direction, dtype=np.float64)
+    u = u / (np.linalg.norm(u) + 1e-12)
+    h_diff = hidden_fail.mean(axis=0) - hidden_success.mean(axis=0)
+    write = matrix.T @ u
+    scores = h_diff * write
+    order = np.argsort(np.abs(scores))[::-1][:top_k]
+    return {
+        "columns": order.tolist(),
+        "scores": scores[order].tolist(),
+    }

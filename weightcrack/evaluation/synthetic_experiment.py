@@ -34,7 +34,7 @@ def _predict(A, b, W, c, x):
 HISTORICAL_REPORTS = {"synthetic_v1", "synthetic_strong", "synthetic_search"}
 
 
-def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) -> dict:
+def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_fault_cols: int = 6) -> dict:
     """Earlier synthetic loop. Not the preregistered proxy_fault_v1 study."""
     start = time.time()
     out_dir = Path(out_dir)
@@ -51,8 +51,8 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 0.8) ->
     W = rng.normal(size=(4, 16)).astype(np.float32)
     c = rng.normal(size=4).astype(np.float32)
 
-    # Fixed fault: rank-one on two columns of W
-    fault_cols = [3, 7]
+    # Denser fault: rank-one on n_fault_cols columns of W
+    fault_cols = rng.choice(16, size=n_fault_cols, replace=False).tolist()
     fault_dir = rng.normal(size=4).astype(np.float32)
     fault_dir /= np.linalg.norm(fault_dir)
     W_damaged = W.copy()
