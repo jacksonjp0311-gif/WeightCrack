@@ -43,7 +43,20 @@ Density was required. Direction estimate was the next lever. Further linear comb
 
 The writer-column score used here matches the ranking the replications report as necessary. The Qwen repetition case is the dense real task where that ranking produced measured gains.
 
-## What the next agent must do
+## Literature connections (added 2026-11-09)
+
+The writer-column score in weightcrack/agents/localization.py is the same ranking the field used. Replications of the Qwen edit score columns by activation contrast times static write. The MIT Astra edit and the nathanrs linear program both start from a direction recovered by contrasting looping versus productive residual states. That is the same contrast the PCA direction on failure logits approximates. The instrument is not novel. It is the one that produced the measured gains on real models.
+
+The 1,023-parameter edit reported by Shanghai AI Lab (arxiv:2611.09382) is a single-column version of the same formula. One column of a down_proj, not 64. The formula is projection removal. The difference is the number of columns and the strength. Their result shows the edit class works at the scale of a single column when the column is the right one. The localization problem is finding that column. The instrument here is the one they used to find it.
+
+What is worth implementing is not a new ranking. It is running the existing instrument on the task where that ranking already worked. The Qwen repetition case has dense failures and a direction the model writes. The probe harness is ready. A local matrix is the missing piece.
+
+## Trail
+
+- Thin fault (2 cols, 6 failures): every instrument zero. docs/CEILING.md
+- Dense fault (6 cols, str 6.0): mean-diff 0.57, PCA top-1 0.64, PCA top-2 + writer-column 0.72. docs/DENSE_FAULT.md, docs/OPTIMIZED.md, docs/PCA_DIRECTION.md
+- Public results: MIT Astra (2 Nov 2026), Shanghai AI Lab 2611.09382 (6 Nov 2026), nathanrs LP (9 Nov 2026), Concept Country (8 Nov 2026). See links above.
+- Next: real matrix probe with the current instrument. weightcrack/evaluation/real_matrix_probe.py is ready. docs/REAL_MATRIX_STATUS.md records the download blocker.
 
 1. Load one MLP matrix from a public checkpoint where a repetition or loop direction has been localized. The probe harness is ready. The prior download failed with a transport error.
 2. Run the current instrument (PCA direction of failure logits + writer-column score) against a frozen practice/holdout split of a loop-or-not probe. Record whether a candidate qualifies under the zero-loss gate.
