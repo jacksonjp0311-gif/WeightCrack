@@ -1,0 +1,367 @@
+{
+  "hits": 54,
+  "trials": 60,
+  "rate": 0.9,
+  "seeds": [
+    {
+      "seed": 0,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 66
+    },
+    {
+      "seed": 1,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 56
+    },
+    {
+      "seed": 2,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 83
+    },
+    {
+      "seed": 3,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 78
+    },
+    {
+      "seed": 4,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 23
+    },
+    {
+      "seed": 5,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 108
+    },
+    {
+      "seed": 6,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 64
+    },
+    {
+      "seed": 7,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 72
+    },
+    {
+      "seed": 8,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 49
+    },
+    {
+      "seed": 9,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 86
+    },
+    {
+      "seed": 10,
+      "qualified": false,
+      "best_delta": 0,
+      "failures": 41
+    },
+    {
+      "seed": 11,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 45
+    },
+    {
+      "seed": 12,
+      "qualified": false,
+      "best_delta": 24,
+      "failures": 62
+    },
+    {
+      "seed": 13,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 101
+    },
+    {
+      "seed": 14,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 82
+    },
+    {
+      "seed": 15,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 79
+    },
+    {
+      "seed": 16,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 49
+    },
+    {
+      "seed": 17,
+      "qualified": false,
+      "best_delta": 3,
+      "failures": 62
+    },
+    {
+      "seed": 18,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 107
+    },
+    {
+      "seed": 19,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 63
+    },
+    {
+      "seed": 20,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 74
+    },
+    {
+      "seed": 21,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 57
+    },
+    {
+      "seed": 22,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 86
+    },
+    {
+      "seed": 23,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 63
+    },
+    {
+      "seed": 24,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 62
+    },
+    {
+      "seed": 25,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 80
+    },
+    {
+      "seed": 26,
+      "qualified": true,
+      "best_delta": 6,
+      "failures": 71
+    },
+    {
+      "seed": 27,
+      "qualified": true,
+      "best_delta": 3,
+      "failures": 51
+    },
+    {
+      "seed": 28,
+      "qualified": false,
+      "best_delta": 3,
+      "failures": 42
+    },
+    {
+      "seed": 29,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 65
+    },
+    {
+      "seed": 30,
+      "qualified": false,
+      "best_delta": 0,
+      "failures": 55
+    },
+    {
+      "seed": 31,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 87
+    },
+    {
+      "seed": 32,
+      "qualified": true,
+      "best_delta": 3,
+      "failures": 70
+    },
+    {
+      "seed": 33,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 54
+    },
+    {
+      "seed": 34,
+      "qualified": true,
+      "best_delta": 35,
+      "failures": 69
+    },
+    {
+      "seed": 35,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 21
+    },
+    {
+      "seed": 36,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 66
+    },
+    {
+      "seed": 37,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 30
+    },
+    {
+      "seed": 38,
+      "qualified": true,
+      "best_delta": 3,
+      "failures": 84
+    },
+    {
+      "seed": 39,
+      "qualified": true,
+      "best_delta": 29,
+      "failures": 83
+    },
+    {
+      "seed": 40,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 77
+    },
+    {
+      "seed": 41,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 75
+    },
+    {
+      "seed": 42,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 78
+    },
+    {
+      "seed": 43,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 30
+    },
+    {
+      "seed": 44,
+      "qualified": false,
+      "best_delta": 13,
+      "failures": 63
+    },
+    {
+      "seed": 45,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 89
+    },
+    {
+      "seed": 46,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 58
+    },
+    {
+      "seed": 47,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 60
+    },
+    {
+      "seed": 48,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 81
+    },
+    {
+      "seed": 49,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 98
+    },
+    {
+      "seed": 50,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 82
+    },
+    {
+      "seed": 51,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 47
+    },
+    {
+      "seed": 52,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 63
+    },
+    {
+      "seed": 53,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 68
+    },
+    {
+      "seed": 54,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 87
+    },
+    {
+      "seed": 55,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 81
+    },
+    {
+      "seed": 56,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 48
+    },
+    {
+      "seed": 57,
+      "qualified": true,
+      "best_delta": 2,
+      "failures": 43
+    },
+    {
+      "seed": 58,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 67
+    },
+    {
+      "seed": 59,
+      "qualified": true,
+      "best_delta": 1,
+      "failures": 29
+    }
+  ]
+}

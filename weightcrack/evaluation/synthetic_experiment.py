@@ -85,7 +85,7 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
     direction = np.array(diff["direction"])
     assert direction.shape[0] == W_damaged.shape[0], "direction must match W rows"
 
-    # PCA directions on failure logits
+    # Static ranking on top two PCA directions of failure logits
     pca_dirs = [direction]
     if logits_fail.shape[0] >= 2:
         centered = logits_fail - logits_fail.mean(axis=0)
@@ -93,11 +93,9 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
         pca_dirs = [vh[0]]
         if vh.shape[0] > 1:
             pca_dirs.append(vh[1])
-    # Writer-column score on first PCA direction
-    _, h_fail = _model_forward(A, b, W_damaged, c, x_prac_t[fail_mask])
-    _, h_ok = _model_forward(A, b, W_damaged, c, x_prac_t[~fail_mask])
-    writer = writer_column_score(h_fail, h_ok, W_damaged, pca_dirs[0], top_k=2)
-    heur_cols = writer["columns"]
+    # Static ranking by |u^T W[:, j]| on first direction
+    write = np.abs(W_damaged.T @ pca_dirs[0])
+    heur_cols = np.argsort(write)[::-1][:2].tolist()
 
     # Practice-only direction search (mean difference + top principal directions of failures)
     def score_target(W_cand, x, y):
@@ -146,8 +144,13 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
 
     results = {"heuristic": [], "random": [], "search": []}
 
+    heuristic_arms = []
+    for u in pca_dirs:
+        write = np.abs(W_damaged.T @ u)
+        cols = np.argsort(write)[::-1][:2].tolist()
+        heuristic_arms.append((cols, u))
     for name, cols, dir_vec in [
-        ("heuristic", heur_cols, pca_dirs[0]),
+        ("heuristic", heuristic_arms[0][0], heuristic_arms[0][1]),
         ("random", rand_cols, direction),
         ("search", search_cols, search_direction),
     ]:
