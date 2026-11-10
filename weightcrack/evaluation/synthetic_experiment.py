@@ -14,7 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
-from weightcrack.agents.localization import activation_difference, rank_columns, practice_direction_search
+from weightcrack.agents.localization import activation_difference, rank_columns, practice_direction_search, writer_column_score
 from weightcrack.patches.huggingface import apply_project_remove, apply_patch
 from weightcrack.schema import WeightCrackPatch, WeightCrackPolicy, PatchChange
 
@@ -85,17 +85,19 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
     direction = np.array(diff["direction"])
     assert direction.shape[0] == W_damaged.shape[0], "direction must match W rows"
 
-    # PCA direction on failure logits (emerged as stronger than mean-diff)
+    # PCA directions on failure logits
+    pca_dirs = [direction]
     if logits_fail.shape[0] >= 2:
         centered = logits_fail - logits_fail.mean(axis=0)
         _, _, vh = np.linalg.svd(centered, full_matrices=False)
-        pca_direction = vh[0]
-    else:
-        pca_direction = direction
-    # Use PCA direction for heuristic ranking
-    ranked = rank_columns(W_damaged, pca_direction, top_k=2)
-    heur_cols = ranked["columns"]
-    heur_cols = ranked["columns"]
+        pca_dirs = [vh[0]]
+        if vh.shape[0] > 1:
+            pca_dirs.append(vh[1])
+    # Writer-column score on first PCA direction
+    _, h_fail = _model_forward(A, b, W_damaged, c, x_prac_t[fail_mask])
+    _, h_ok = _model_forward(A, b, W_damaged, c, x_prac_t[~fail_mask])
+    writer = writer_column_score(h_fail, h_ok, W_damaged, pca_dirs[0], top_k=2)
+    heur_cols = writer["columns"]
 
     # Practice-only direction search (mean difference + top principal directions of failures)
     def score_target(W_cand, x, y):
@@ -137,14 +139,15 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
         pred = _predict(A, b, W_cand, c, x)
         return int(np.sum(pred == y))
 
-    def score_preserve(W_cand, x, y):
+    def score_preserve(W_cand, x, y_base_pred):
+        # Baseline-to-candidate flips, not disagreements with the intact teacher
         pred = _predict(A, b, W_cand, c, x)
-        return int(np.sum(pred != y))  # flips
+        return int(np.sum(pred != y_base_pred))
 
     results = {"heuristic": [], "random": [], "search": []}
 
     for name, cols, dir_vec in [
-        ("heuristic", heur_cols, pca_direction),
+        ("heuristic", heur_cols, pca_dirs[0]),
         ("random", rand_cols, direction),
         ("search", search_cols, search_direction),
     ]:
@@ -162,7 +165,7 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
 
             t_before = score_target(W_damaged, x_prac_t, y_prac_t)
             t_after = score_target(cand, x_prac_t, y_prac_t)
-            p_flips = score_preserve(cand, x_prac_p, y_prac_p)
+            p_flips = score_preserve(cand, x_prac_p, _predict(A, b, W_damaged, c, x_prac_p))
             correction = t_after - t_before
             # Previously correct must not be lost
             prev_correct = y_prac_t_dam == y_prac_t
@@ -203,13 +206,13 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
             continue
         strength = fin["strength"]
         cols = {"heuristic": heur_cols, "random": rand_cols, "search": search_cols}[name]
-        dir_vec = search_direction if name == "search" else (pca_direction if name == "heuristic" else direction)
+        dir_vec = search_direction if name == "search" else (pca_dirs[0] if name == "heuristic" else direction)
         cand, _ = apply_project_remove(W_damaged, dir_vec, cols, strength)
         t_gain = score_target(cand, x_hold_t, y_hold_t) - score_target(W_damaged, x_hold_t, y_hold_t)
         prev_ok = _predict(A, b, W_damaged, c, x_hold_t) == y_hold_t
         cand_pred = _predict(A, b, cand, c, x_hold_t)
         losses = int(np.sum(prev_ok & (cand_pred != y_hold_t)))
-        p_flips = score_preserve(cand, x_hold_p, y_hold_p)
+        p_flips = score_preserve(cand, x_hold_p, _predict(A, b, W_damaged, c, x_hold_p))
         repair = t_gain > 0 and losses == 0 and p_flips == 0
         heldout[name] = {
             "target_gain": t_gain,
