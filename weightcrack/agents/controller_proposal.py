@@ -34,7 +34,7 @@ def propose_and_gate(
 
     try:
         gate_patch(patch, policy, base_param_count=sum(t.size for t in tensors.values()))
-        candidate, accounting = construct_candidate(matrix, patch, policy)
+        candidate, accounting, _ = construct_candidate(matrix, patch, policy, change.tensor)
     except (PolicyViolation, Exception) as exc:
         return {"status": "rejected", "reason": str(exc)}
 
