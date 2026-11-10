@@ -85,8 +85,16 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
     direction = np.array(diff["direction"])
     assert direction.shape[0] == W_damaged.shape[0], "direction must match W rows"
 
-    # Mean-difference direction and columns
-    ranked = rank_columns(W_damaged, direction, top_k=2)
+    # PCA direction on failure logits (emerged as stronger than mean-diff)
+    if logits_fail.shape[0] >= 2:
+        centered = logits_fail - logits_fail.mean(axis=0)
+        _, _, vh = np.linalg.svd(centered, full_matrices=False)
+        pca_direction = vh[0]
+    else:
+        pca_direction = direction
+    # Use PCA direction for heuristic ranking
+    ranked = rank_columns(W_damaged, pca_direction, top_k=2)
+    heur_cols = ranked["columns"]
     heur_cols = ranked["columns"]
 
     # Practice-only direction search (mean difference + top principal directions of failures)
@@ -136,7 +144,7 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
     results = {"heuristic": [], "random": [], "search": []}
 
     for name, cols, dir_vec in [
-        ("heuristic", heur_cols, direction),
+        ("heuristic", heur_cols, pca_direction),
         ("random", rand_cols, direction),
         ("search", search_cols, search_direction),
     ]:
@@ -195,7 +203,7 @@ def run_experiment(out_dir: Path, seed: int = 0, fault_strength: float = 6.0, n_
             continue
         strength = fin["strength"]
         cols = {"heuristic": heur_cols, "random": rand_cols, "search": search_cols}[name]
-        dir_vec = search_direction if name == "search" else direction
+        dir_vec = search_direction if name == "search" else (pca_direction if name == "heuristic" else direction)
         cand, _ = apply_project_remove(W_damaged, dir_vec, cols, strength)
         t_gain = score_target(cand, x_hold_t, y_hold_t) - score_target(W_damaged, x_hold_t, y_hold_t)
         prev_ok = _predict(A, b, W_damaged, c, x_hold_t) == y_hold_t
