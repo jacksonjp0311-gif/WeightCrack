@@ -1,15 +1,17 @@
 {
   "status": "probe_complete",
   "matrix_shape": [
-    896,
-    4864
+    1024,
+    3584
   ],
-  "matrix_hash": "689bb57897d47e3d9c8b645d4d1bd5b5ef1645524fe6211683c67372a6179988",
+  "matrix_hash": "b75ed374dddf0d5c9443f12b5d7d7af05d5234d264965911419ef3616fb0144d",
   "selected_columns": [
-    2252,
-    3396
+    2056,
+    1309
   ],
-  "touched_coordinates": 1792,
-  "max_abs_stored_delta": 0.005169042386114597,
-  "note": "Structural probe on a loaded matrix. Not a language-model generation measurement."
+  "n_failure_traces": 8,
+  "strength": 0.5,
+  "touched_coordinates": 2048,
+  "max_abs_stored_delta": 0.003278465010225773,
+  "note": "Host-gated probe using supplied failure traces. Not a generation measurement until holdout is opened."
 }

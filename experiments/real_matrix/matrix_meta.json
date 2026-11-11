@@ -1,16 +1,17 @@
 {
-  "model_id": "Qwen/Qwen2.5-0.5B",
-  "revision": "060db6499f32faf8b98477b0a26969ef7d8b9987",
-  "checkpoint_file_sha256": "88c142557820ccad55bb59756bfcfcf891de9cc6202816bd346445188a0ed342",
-  "source_key": "model.layers.23.mlp.down_proj.weight",
-  "layer_index": 23,
+  "model_id": "Qwen/Qwen3.5-0.8B",
+  "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+  "checkpoint_file_sha256": "04b1c301231dd422b8860db31311ab2721511346a32cb1e079c4c4e5f1fe4696",
+  "source_key": "model.language_model.layers.15.mlp.down_proj.weight",
+  "layer_index": 15,
   "checkpoint_dtype": "bfloat16",
   "stored_dtype": "float32",
   "shape": [
-    896,
-    4864
+    1024,
+    3584
   ],
-  "content_sha256": "689bb57897d47e3d9c8b645d4d1bd5b5ef1645524fe6211683c67372a6179988",
+  "content_sha256": "b75ed374dddf0d5c9443f12b5d7d7af05d5234d264965911419ef3616fb0144d",
   "npz": "C:\\Users\\jacks\\Projects\\WeightCrack\\experiments\\real_matrix\\mlp_down_proj.npz",
-  "npz_key": "weight"
+  "npz_key": "weight",
+  "chat_template_sample_prefix": "<|im_start|>user\nSolve: 2 + 2 =<|im_end|>\n<|im_start|>assistant\n<think>\n"
 }
