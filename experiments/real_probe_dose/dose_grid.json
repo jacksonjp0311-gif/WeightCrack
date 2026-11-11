@@ -1,0 +1,45 @@
+{
+  "columns": [
+    2708,
+    3475
+  ],
+  "n_fail": 1,
+  "results": [
+    {
+      "strength": 0.1,
+      "status": "admitted",
+      "touched": 1792,
+      "max_delta": 0.01025390625
+    },
+    {
+      "strength": 0.25,
+      "status": "admitted",
+      "touched": 1792,
+      "max_delta": 0.025634765625
+    },
+    {
+      "strength": 0.5,
+      "status": "admitted",
+      "touched": 1792,
+      "max_delta": 0.05126953125
+    },
+    {
+      "strength": 1.0,
+      "status": "admitted",
+      "touched": 1792,
+      "max_delta": 0.1025390625
+    },
+    {
+      "strength": 1.5,
+      "status": "admitted",
+      "touched": 1792,
+      "max_delta": 0.15380859375
+    },
+    {
+      "strength": 2.0,
+      "status": "admitted",
+      "touched": 1792,
+      "max_delta": 0.205078125
+    }
+  ]
+}
