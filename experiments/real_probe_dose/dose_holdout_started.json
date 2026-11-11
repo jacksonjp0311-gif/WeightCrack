@@ -1,0 +1,41 @@
+{
+  "status": "locked",
+  "direction_source": "experiments/real_probe/finalist.wcbundle/receipt.json normalized_patch.direction_f64_hex",
+  "columns": [
+    2056,
+    1309
+  ],
+  "fail_shape": [
+    8,
+    1024
+  ],
+  "finalists": [
+    {
+      "strength": 1.0,
+      "admitted": true,
+      "candidate_content_sha256": "1d62852a6a025be8c69a58aa0de7f9bb69b8b6ff694a84640f6aea1fc8558a22",
+      "touched_coordinates": 2048,
+      "max_abs_stored_delta": 0.006556929787620902,
+      "bundle": "C:\\Users\\jacks\\Projects\\WeightCrack\\experiments\\real_probe_dose\\strength-1.0.wcbundle",
+      "holdout_opened": false
+    },
+    {
+      "strength": 1.5,
+      "admitted": true,
+      "candidate_content_sha256": "6a8b15ba00a25afc7d9a94584e5b446a6eca41a5bd2fd668af2f9de8e64bf630",
+      "touched_coordinates": 2048,
+      "max_abs_stored_delta": 0.009835394834226463,
+      "bundle": "C:\\Users\\jacks\\Projects\\WeightCrack\\experiments\\real_probe_dose\\strength-1.5.wcbundle",
+      "holdout_opened": false
+    },
+    {
+      "strength": 2.0,
+      "admitted": true,
+      "candidate_content_sha256": "bcd7928103bf3901ab938e931550ded594c573931f66c5479ceb205cc085e50f",
+      "touched_coordinates": 2048,
+      "max_abs_stored_delta": 0.013113859808072448,
+      "bundle": "C:\\Users\\jacks\\Projects\\WeightCrack\\experiments\\real_probe_dose\\strength-2.0.wcbundle",
+      "holdout_opened": false
+    }
+  ]
+}

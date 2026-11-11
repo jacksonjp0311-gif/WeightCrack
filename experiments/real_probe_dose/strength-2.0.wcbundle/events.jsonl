@@ -1,0 +1,11 @@
+{
+  "behavioral_qualification": null,
+  "candidate_file_sha256": "702421380c2b72e1b8985561f1acd7d70ddbd828f4117f01b7e3d4d64970c272",
+  "disposition": "applied",
+  "patch_sha256": "f1fad0df02516f72578a49d8626a8a13e471f4446e9d3e3e8e087713af5c403e",
+  "policy_sha256": "7faa0f85d912e30dabce983249f9c56e41b01f0749f00cddf6a03aadd3a96e8b",
+  "schema": "weightcrack.event.v1",
+  "status": "applied",
+  "task_id": "real-matrix-dose-2.0",
+  "tensor": "weight"
+}
