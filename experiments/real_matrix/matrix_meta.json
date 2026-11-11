@@ -1,0 +1,16 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B",
+  "revision": "060db6499f32faf8b98477b0a26969ef7d8b9987",
+  "checkpoint_file_sha256": "88c142557820ccad55bb59756bfcfcf891de9cc6202816bd346445188a0ed342",
+  "source_key": "model.layers.23.mlp.down_proj.weight",
+  "layer_index": 23,
+  "checkpoint_dtype": "bfloat16",
+  "stored_dtype": "float32",
+  "shape": [
+    896,
+    4864
+  ],
+  "content_sha256": "689bb57897d47e3d9c8b645d4d1bd5b5ef1645524fe6211683c67372a6179988",
+  "npz": "C:\\Users\\jacks\\Projects\\WeightCrack\\experiments\\real_matrix\\mlp_down_proj.npz",
+  "npz_key": "weight"
+}

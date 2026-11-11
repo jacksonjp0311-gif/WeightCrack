@@ -1,0 +1,15 @@
+{
+  "status": "probe_complete",
+  "matrix_shape": [
+    896,
+    4864
+  ],
+  "matrix_hash": "689bb57897d47e3d9c8b645d4d1bd5b5ef1645524fe6211683c67372a6179988",
+  "selected_columns": [
+    2252,
+    3396
+  ],
+  "touched_coordinates": 1792,
+  "max_abs_stored_delta": 0.005169042386114597,
+  "note": "Structural probe on a loaded matrix. Not a language-model generation measurement."
+}
