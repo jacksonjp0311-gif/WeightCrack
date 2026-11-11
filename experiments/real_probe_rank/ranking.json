@@ -1,0 +1,35 @@
+{
+  "columns": [
+    1309,
+    2633,
+    1775,
+    1022
+  ],
+  "n_fail": 8,
+  "results": [
+    {
+      "strength": 0.5,
+      "status": "admitted",
+      "cols": [
+        1309,
+        2633,
+        1775,
+        1022
+      ],
+      "touched": 4096,
+      "max_delta": 0.002945561893284321
+    },
+    {
+      "strength": 1.0,
+      "status": "admitted",
+      "cols": [
+        1309,
+        2633,
+        1775,
+        1022
+      ],
+      "touched": 4096,
+      "max_delta": 0.005891123786568642
+    }
+  ]
+}
