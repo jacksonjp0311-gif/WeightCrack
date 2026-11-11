@@ -1,0 +1,34 @@
+{
+  "status": "locked",
+  "direction_source": "top PCA component of the eight centered failure traces",
+  "columns": [
+    1309,
+    2633,
+    1775,
+    1022
+  ],
+  "fail_shape": [
+    8,
+    1024
+  ],
+  "finalists": [
+    {
+      "strength": 0.5,
+      "admitted": true,
+      "candidate_content_sha256": "ef2601d185d53009b8f74979c17b49c4685909af603e15361e6cf54cafad1597",
+      "touched_coordinates": 4096,
+      "max_abs_stored_delta": 0.002945561893284321,
+      "bundle": "C:\\Users\\jacks\\Projects\\WeightCrack\\experiments\\real_probe_rank\\strength-0.5.wcbundle",
+      "holdout_opened": false
+    },
+    {
+      "strength": 1.0,
+      "admitted": true,
+      "candidate_content_sha256": "cf7a3f2a895bd0c7b94c1564cc931a203faa3601dba608ef29c7020262b6b44a",
+      "touched_coordinates": 4096,
+      "max_abs_stored_delta": 0.005891123786568642,
+      "bundle": "C:\\Users\\jacks\\Projects\\WeightCrack\\experiments\\real_probe_rank\\strength-1.0.wcbundle",
+      "holdout_opened": false
+    }
+  ]
+}

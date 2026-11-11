@@ -1,0 +1,11 @@
+{
+  "behavioral_qualification": null,
+  "candidate_file_sha256": "e05c7f7960f1cfc2be83ebf925ec6bf357f9d0729fe315379a6178e813103d05",
+  "disposition": "applied",
+  "patch_sha256": "35c9bdd42957113d43e75d139c0a8e77698f0d5846ad345f15ff3ff1b96dbef5",
+  "policy_sha256": "7faa0f85d912e30dabce983249f9c56e41b01f0749f00cddf6a03aadd3a96e8b",
+  "schema": "weightcrack.event.v1",
+  "status": "applied",
+  "task_id": "real-matrix-ranking-0.5",
+  "tensor": "weight"
+}

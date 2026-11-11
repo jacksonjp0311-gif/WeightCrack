@@ -2,23 +2,40 @@
 
 Date: 2026-11-11. Branch `dev/verified-projection-repair`.
 
-## Ranking change
+Strengths 0.5 and 1.0 were admitted. Each sealed holdout was opened once. No label flipped. The success criterion is not met.
 
-Eight failure traces from the Qwen3.5-0.8B layer-15 measurement. Direction is the top two PCA components of those traces. Columns ranked by the sum of absolute write magnitudes onto both directions. Top four selected: 1309, 2633, 1775, 1022.
+## Ranking
+
+Eight failure traces from the Qwen3.5-0.8B layer-15 measurement, shape `(8, 1024)`. Columns were ranked by the sum of absolute write magnitudes onto the top two PCA components of those traces. The selected columns stay 1309, 2633, 1775, and 1022.
+
+The edit direction is the top PCA component of the same eight centered traces, normalized by its norm plus `1e-12`. That is the direction whose strength-0.5 and strength-1.0 deltas match `experiments/real_probe_rank/ranking.json`.
 
 ## Gate
 
-Strengths 0.5 and 1.0 were both admitted through `construct_candidate`.
+Each strength was built with `construct_candidate` and the probe policy: `allow_tensors` `weight`, `max_entries` 10000, `max_fraction` 0.05, `max_abs_delta` 1.0. No strength was rejected. Each candidate hash was written to `experiments/real_probe_rank/ranking_holdout_started.json` before any holdout prompt was tokenized. `apply_patch` then published a new bundle. Touched coordinates are 4096, which is 1/896 of the matrix.
 
-| strength | status   | touched | max_abs_delta |
-|----------|----------|---------|---------------|
-| 0.5      | admitted | 4096    | 0.0029        |
-| 1.0      | admitted | 4096    | 0.0059        |
+| strength | candidate content SHA-256 | max abs stored delta | bundle |
+| --- | --- | --- | --- |
+| 0.5 | `ef2601d185d53009b8f74979c17b49c4685909af603e15361e6cf54cafad1597` | 0.002945561893284321 | `experiments/real_probe_rank/strength-0.5.wcbundle` |
+| 1.0 | `cf7a3f2a895bd0c7b94c1564cc931a203faa3601dba608ef29c7020262b6b44a` | 0.005891123786568642 | `experiments/real_probe_rank/strength-1.0.wcbundle` |
 
 ## Holdout
 
-Not opened. Generation on the sealed prompts is required to score labels. The prior two-column holdout (columns 2056 and 1309) did not move behavior at any dose. This ranking includes column 1309 and adds three others. A new finalist for either strength would lock its hash and open the same six prompts once.
+Opened once per finalist. Six sealed prompts. Thinking enabled. Greedy decoding, 384 new tokens. The 4-word rule is unchanged. Only the edited matrix was generated. Baseline labels are copied from `experiments/real_probe/holdout.json` and were not regenerated. The recorded baseline is 4 of 6.
 
-## Status
+| id | baseline | strength 0.5 | strength 1.0 |
+| --- | --- | --- | --- |
+| h01 | true | true | true |
+| h02 | false | false | false |
+| h03 | true | true | true |
+| h04 | true | true | true |
+| h05 | false | false | false |
+| h06 | true | true | true |
 
-The ranking change produces an admissible candidate. The behavioral measurement is open until holdout is run. The success criterion remains unmet until a label flips.
+Each edited pass looped on 4 of 6 prompts. Every prompt kept its baseline label. No label flipped at either strength.
+
+Details: `experiments/real_probe_rank/ranking_holdout.json`. Runner: `experiments/real_probe_rank/ranking_holdout.py`.
+
+## Criterion
+
+The success criterion is a policy-admitted edit that moves held-out loops. The gate admitted both edits and the receipts are written. No label flipped, so the criterion is not met.
