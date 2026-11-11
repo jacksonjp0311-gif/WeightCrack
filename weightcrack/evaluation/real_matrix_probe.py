@@ -62,6 +62,8 @@ def run_probe(
     source_sha = hashlib.sha256(np.ascontiguousarray(W).tobytes()).hexdigest()
     patch = WeightCrackPatch(
         base_sha256=source_sha,
+        reason="real-matrix probe",
+        sector="math-loop",
         changes=[
             PatchChange(
                 op="project_remove",
@@ -72,11 +74,16 @@ def run_probe(
             )
         ],
     )
-    policy = WeightCrackPolicy(max_entries=10000, max_fraction=0.05, max_abs_delta=1.0)
+    policy = WeightCrackPolicy(
+        allow_tensors=["weight"],
+        max_entries=10000,
+        max_fraction=0.05,
+        max_abs_delta=1.0,
+    )
 
     try:
         gate_patch(patch, policy, base_param_count=W.size)
-        candidate, accounting = construct_candidate(W, patch, policy)
+        candidate, accounting, normalized = construct_candidate(W, patch, policy, "weight")
     except (PolicyViolation, Exception) as exc:
         return {"status": "REJECTED", "reason": str(exc)}
 
